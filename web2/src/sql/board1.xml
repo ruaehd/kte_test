@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="Board1">
+	<insert id="insertBoard" parameterType="vo.Board1VO">
+		INSERT INTO board1 VALUES(0, #{title}, #{content}, #{writer}, #{hit}, NOW())
+	</insert>
+	
+	<select id="selectBoardList" resultType="vo.Board1VO">
+		SELECT * FROM board1 ORDER BY no DESC
+	</select>
+	
+	<select id="selectBoardOne" parameterType="vo.Board1VO" resultType="vo.Board1VO">
+		SELECT* FROM board1 WHERE no=#{no}
+	</select>
+	
+	<update id="updateHit" parameterType="vo.Board1VO">
+		UPDATE board1 SET hit=hit+1 WHERE no=#{no}
+	</update>
+	
+	<select id="selectBoardPrev" parameterType="vo.Board1VO" resultType="int">
+		SELECT ifnull(MAX(no),0) FROM board1 WHERE no <![CDATA[ < ]]> #{no}
+	</select>
+	
+	<select id="selectBoardNext" parameterType="vo.Board1VO" resultType="int">
+		SELECT ifnull(MIN(no),0) FROM board1 WHERE no <![CDATA[ > ]]> #{no}
+	</select>
+	
+	<select id="getBoardTotal" resultType="int">
+		SELECT count(*) AS tot FROM board1
+	</select>
+	
+	<delete id="deleteBoardOne" parameterType="vo.Board1VO">
+		DELETE FROM board1 WHERE no=#{no}
+	</delete>
+	
+	<update id="updateBoard" parameterType="vo.Board1VO">
+		UPDATE board1 SET no=#{no}, title=#{title}, content=#{content}, writer=#{writer}, writedate=NOW() WHERE no=${no}
+	</update>
+</mapper>

@@ -1,0 +1,77 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="V2_Item">
+	<select id="selectLastNo" resultType="int">
+		SELECT ifnull(MAX(no), 1000000) FROM v2_item
+	</select>
+	
+	<insert id="insertItemOne" parameterType="vo.V2_ItemVO">
+		INSERT INTO v2_item (no, name, price, qty, date1) VALUES(#{no}, #{name}, #{price}, #{qty}, NOW())
+	</insert>
+	
+	<insert id="insertItemMulti" parameterType="java.util.List">
+		INSERT INTO v2_item (no, name, price, qty, date1) VALUES
+		<foreach separator="," collection="list" item="vo">
+			(#{vo.no}, #{vo.name}, #{vo.price}, #{vo.qty}, NOW())
+		</foreach>
+	</insert>
+	
+	<select id="selectItemList" parameterType="int" resultType="vo.V2_ItemVO">
+		SELECT * FROM v2_item ORDER BY no DESC LIMIT #{page}
+	</select>
+	
+	<select id="selectShopList" resultType="vo.V2_ItemVO">
+		SELECT no, name, price, FORMAT(price, 0) AS price1, qty FROM v2_item ORDER BY no DESC
+	</select>
+	
+	<delete id="deleteItemOne" parameterType="int">
+		DELETE FROM v2_item WHERE no=#{no}
+	</delete>
+	
+	<delete id="deleteItemMulti" parameterType="java.util.List">
+		DELETE FROM v2_item WHERE no IN (
+		<foreach separator="," collection="list" item="vo">
+			(#{vo.no})
+		</foreach>
+		)
+	</delete>
+	
+	<select id="selectItemOne" parameterType="int" resultType="vo.V2_ItemVO">
+		SELECT no, name, price, qty, date1 FROM v2_item WHERE no=#{no}
+	</select>
+	
+	<update id="updateItemOne" parameterType="V2_ItemVO">
+		UPDATE v2_item SET name=#{name}, price=#{price}, qty=#{qty} WHERE no=#{no}		
+	</update>
+	
+	<select id="selectItemChk" parameterType="java.util.List" resultType="V2_ItemVO">
+		SELECT * FROM v2_item WHERE no IN(
+		<foreach separator="," collection="list" item="no">
+			#{no}
+		</foreach>
+		) ORDER BY no DESC
+	</select>
+	
+	<update id="updateItemMulti" parameterType="java.util.List">
+		UPDATE v2_item SET name = (CASE no
+			<foreach separator=" " collection="list" item="vo">
+				WHEN #{vo.no} THEN #{vo.name} 
+			</foreach>
+		END), price = (CASE no
+			<foreach separator=" " collection="list" item="vo">
+				WHEN #{vo.no} THEN #{vo.price} 
+			</foreach>
+		END), qty = (CASE no
+			<foreach separator=" " collection="list" item="vo">
+				WHEN #{vo.no} THEN #{vo.qty} 
+			</foreach>
+		END) 	
+		WHERE no IN(
+			<foreach separator="," collection="list" item="vo">
+				#{vo.no}
+			</foreach>
+		)
+	</update>
+	
+</mapper>

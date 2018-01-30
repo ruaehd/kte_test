@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="V3_Sale">
+	<insert id="insertSale" parameterType="vo.V3_SaleVO">
+		INSERT INTO `v3_sale`(no, code_pd, no_mem, s_date, cnt, price, price_c, date1) VALUES(#{no}, #{code_pd}, #{no_mem}, #{s_date}, #{cnt}, #{price}, #{price_c}, NOW())
+	</insert>
+	
+	<select id="selectSaleList" resultType="vo.V3_SaleVO">
+		SELECT * FROM `v3_sale` ORDER BY no DESC
+	</select>	
+	
+	<select id="selectLastNo" resultType="int">
+		SELECT ifnull(MAX(no), 0) FROM `v3_sale`
+	</select>
+	
+	<insert id="insert" parameterType="String">
+		INSERT INTO `session` (id) VALUES(#{id})
+	</insert>
+</mapper>

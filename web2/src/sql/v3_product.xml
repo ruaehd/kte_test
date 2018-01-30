@@ -1,0 +1,77 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="V3_Product">
+
+	<insert id="insertProduct" parameterType="vo.V3_ProductVO">
+		INSERT INTO `v3_product`(code, name, company, price, price_c, qty, date1) VALUES(#{code}, #{name}, #{company}, #{price}, #{price_c}, #{qty}, NOW())
+	</insert>
+	
+	<select id="selectProductList" resultType="vo.V3_ProductVO">
+		SELECT * FROM `v3_product` ORDER BY idx ASC, date1 DESC
+	</select>
+	
+	<select id="selectProductCodeList" resultType="String">
+		SELECT code FROM `v3_product`
+	</select>
+	
+	<update id="updateQtyAddPlus" parameterType="vo.V3_ProductVO">
+		UPDATE `v3_product` SET qty = qty + #{qty} WHERE code=#{code}
+	</update>
+	
+	<update id="updateIDXOrder" parameterType="vo.V3_ProductVO">
+		UPDATE `v3_product` SET idx=#{idx} WHERE code=#{code}
+	</update>
+	
+	<update id="updateImg" parameterType="vo.V3_ProductVO">
+		UPDATE `v3_product` SET img=#{img, jdbcType=BLOB} WHERE code=#{code}
+	</update>
+	
+	<resultMap type="vo.V3_ProductVO" id="resultImg">
+		<result column ="code" property="code" />
+		<result column ="img" property="img" jdbcType="BLOB" />
+	</resultMap>
+	<select id="selectImg" parameterType="String" resultMap="resultImg">
+		SELECT code, img FROM `v3_product` WHERE code=#{code}
+	</select>
+	
+	<select id="selectProductOne" parameterType="String" resultType="vo.V3_ProductVO">
+		SELECT * FROM `v3_product` WHERE code=#{code}
+	</select>
+	
+	<update id="updateImg1" parameterType="vo.V3_ProductVO">
+		UPDATE `v3_product` 
+		SET 
+			img=#{img, jdbcType=BLOB}, 
+			img1=#{img1, jdbcType=BLOB}, 
+			img2=#{img2, jdbcType=BLOB}, 
+			img3=#{img3, jdbcType=BLOB}, 
+			img4=#{img4, jdbcType=BLOB} 
+		WHERE code=#{code}
+	</update>
+	
+	<resultMap type="vo.V3_ProductVO" id="resultImg1">
+		<result column ="code" property="code" />
+		<result column ="img" property="img" jdbcType="BLOB" />
+		<result column ="img1" property="img1" jdbcType="BLOB" />
+		<result column ="img2" property="img2" jdbcType="BLOB" />
+		<result column ="img3" property="img3" jdbcType="BLOB" />
+		<result column ="img4" property="img4" jdbcType="BLOB" />
+	</resultMap>
+	<select id="selectImg1" parameterType="String" resultMap="resultImg1">
+		SELECT code, img, img1, img2, img3, img4 FROM `v3_product` WHERE code=#{code}
+	</select>
+	
+	
+	<!-- <select id="selectProviderOne" parameterType="String" resultType="vo.V3_ProviderVO">
+		SELECT * FROM `v3_provider` WHERE code=#{code}
+	</select>
+	
+	<update id="updateProvider" parameterType="vo.V3_ProviderVO">
+		UPDATE `v3_provider` SET name=#{name}, tel=#{tel}, header=#{header}, phone=#{phone}, postcode=#{postcode}, addr=#{addr} WHERE code=#{code}
+	</update>
+	
+	<delete id="deleteProvider" parameterType="vo.V3_ProviderVO">
+		DELETE FROM `v3_provider` WHERE code=#{code}
+	</delete> -->
+</mapper>

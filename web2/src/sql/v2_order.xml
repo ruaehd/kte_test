@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="V2_Order">
+	<insert id="insertOrder" parameterType="vo.V2_OrderVO">
+		INSERT INTO `v2_order`(no, cnt, custom_id, item_no, date1) VALUES(#{no}, #{cnt}, #{custom_id}, #{item_no}, NOW())
+	</insert>
+	
+	<select id="selectOrder" parameterType="vo.V2_OrderVO" resultType="vo.V2_OrderVO">
+		SELECT * FROM v2_order WHERE custom_id=#{custom_id}
+	</select>
+	
+	<select id="selectItemOrder" parameterType="vo.V2_OrderVO" resultType="vo.V2_ItemOrderVO">
+		SELECT o.no, o.cnt, o.date1, i.name, i.price, i.qty
+		FROM v2_order o
+		INNER JOIN v2_item i
+		ON o.item_no = i.no
+		WHERE o.custom_id=#{custom_id}
+	</select>
+</mapper>

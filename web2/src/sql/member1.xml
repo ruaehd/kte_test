@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="Member1">
+	<!-- //public int insertMember(Member1VO vo){ } -->
+	<insert id="insertMember" parameterType="vo.Member1VO">
+		INSERT INTO member1
+		VALUES(#{id}, SHA1(#{pw}),
+		#{name},#{postcode},#{addr1}, #{addr1},#{addr1}, NOW())
+	</insert>
+
+	<!-- //public int updateMember(Member1VO vo){ } -->
+	<update id="updateMemberPW" parameterType="vo.Member1VO">
+		UPDATE member1 SET
+		pw=SHA1(#{pw})
+		WHERE id=#{id} AND pw=SHA1(#{pw1})
+	</update>
+
+	<!-- //public int deleteMember(Member1VO vo){ } -->
+	<delete id="deleteMember" parameterType="vo.Member1VO">
+		DELETE FROM member WHERE
+		id=#{id}
+	</delete>
+
+	<!-- public Member1VO selectMemberOne(Member1VO vo){ } -->
+	<select id="selectMemberOne" resultType="vo.Member1VO"
+		parameterType="vo.Member1VO">
+		SELECT * FROM member1 WHERE id=#{id}
+	</select>
+</mapper>
