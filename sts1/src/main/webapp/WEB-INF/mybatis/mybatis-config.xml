@@ -7,4 +7,8 @@
 		<setting name="multipleResultSetsEnabled" value="true"/>
 		<setting name="useGeneratedKeys" value="true" />
 	</settings>
+	
+	<typeAliases>
+		<typeAlias alias="v3_MemberVO" type="com.kte.mvc.vo.V3_MemberVO"/>
+	</typeAliases>
 </configuration>

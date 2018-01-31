@@ -1,5 +1,7 @@
 package com.kte.mvc;
 
+import java.util.List;
+
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
@@ -18,7 +20,16 @@ public class MemberController {
 	@Autowired						//DAO사용하기위해
 	private MemberDAO mDAO = null;
 	
-	
+	@RequestMapping(value="/memberlist.do", method=RequestMethod.GET)
+	public String memberList(HttpServletRequest request, HttpServletResponse response) {
+
+		List<V3_MemberVO> list = mDAO.selectMemberList();
+		/*List<V3_MemberVO> list1 = mDAO.selectMemberList1();*/
+		
+		request.setAttribute("list", list);
+/*		request.setAttribute("list1", list1);*/
+		return "v1_memberlist";
+	}
 	@RequestMapping(value="/idcheck.do", method=RequestMethod.GET)
 	//@ResponseBody는 추가하면 jsp파일이 표시되는 것이 아닌 리턴값 자체가 전달됨
 	public @ResponseBody Boolean join(HttpServletRequest request) {		
@@ -42,9 +53,8 @@ public class MemberController {
 	
 	@RequestMapping(value="/login.do", method=RequestMethod.POST)
 	public String login1(HttpServletRequest request, HttpServletResponse response) {
-		String id = request.getParameter("id");
 		
-		return "redirect:login.do";
+		return null;
 	}
 	
 	@RequestMapping(value="/join.do", method=RequestMethod.GET)

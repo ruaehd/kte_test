@@ -10,9 +10,16 @@ public class V3_MemberVO {
 	private String postcode = null;
 	private String addr = null;
 	private String date1 = null;
+	private int chk = 1;
 	
 	
 	
+	public int getChk() {
+		return chk;
+	}
+	public void setChk(int chk) {
+		this.chk = chk;
+	}
 	public String getPw() {
 		return pw;
 	}
