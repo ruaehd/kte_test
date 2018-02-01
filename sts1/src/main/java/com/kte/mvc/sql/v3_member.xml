@@ -2,12 +2,12 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 
 <mapper namespace="V3_Member">
-	<insert id="insertMember" parameterType="com.kte.mvc.vo.V3_MemberVO">
+	<insert id="insertMember" parameterType="V3_MemberVO">
 		INSERT INTO `v3_member`(no, name, pw, birth, tel, phone, postcode, addr, date1) 
 		VALUES(#{no}, #{name}, SHA1(#{pw}), #{birth}, #{tel}, #{phone}, #{postcode}, #{addr}, NOW())
 	</insert>
 	
-	<select id="selectMemberList" resultType="com.kte.mvc.vo.V3_MemberVO">
+	<select id="selectMemberList" resultType="V3_MemberVO">
 		SELECT * FROM `v3_member` ORDER BY no DESC
 	</select>
 	
@@ -19,19 +19,24 @@
 		SELECT no FROM `v3_member`
 	</select>
 	
-	<select id="selectLogin" parameterType="com.kte.mvc.vo.V3_MemberVO" resultType="com.kte.mvc.vo.V3_MemberVO">
+	<select id="selectLogin" parameterType="V3_MemberVO" resultType="V3_MemberVO">
 		SELECT * FROM `v3_member` WHERE no=#{no} AND pw=SHA1(#{pw})
 	</select>
 	
-	<select id="selectMemberOne" resultType="com.kte.mvc.vo.V3_MemberVO">
+	<select id="selectMemberOne" resultType="V3_MemberVO">
 		SELECT * FORM `v3_member` WHERE no=#{no}
 	</select>
-	<update id="updateMember" parameterType="com.kte.mvc.vo.V3_MemberVO">
+	<update id="updateMember" parameterType="V3_MemberVO">
 		UPDATE `v3_member` SET name#{name}, pw=#{pw}, birth=#{birth}, 
 		tel=#{tel}, phone=#{phone}, postcode=#{postcode}, addr=#{addr}
 	</update>
 	
-	<delete id="deleteMember" parameterType="com.kte.mvc.vo.V3_MemberVO">
+	<delete id="deleteMember" parameterType="V3_MemberVO">
 		DELETE  FROM `v3_member` WHERE no=#{no}
 	</delete>
+	
+	<select id="selectMemberLogin" parameterType="V3_MemberVO" resultType="int">
+		SELECT COUNT(*) AS cnt FROM v3_member WHERE no=#{no} AND pw=SHA1(#{pw})
+	</select>
+
 </mapper>

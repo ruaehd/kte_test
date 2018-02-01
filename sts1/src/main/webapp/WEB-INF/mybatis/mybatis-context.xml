@@ -5,21 +5,31 @@
 	xsi:schemaLocation="
 	http://www.springframework.org/schema/beans 
 	http://www.springframework.org/schema/beans/spring-beans.xsd
-	http://mybatis.org/schema/mybatis-spring
-	http://mybatisorg/schema/mybatis-spring-1.2.xsd">
+	http://mybatis.org/schema/mybatis-spring 
+	http://mybatis.org/schema/mybatis-spring-1.2.xsd">
 
 	<bean id="dataSource" class="org.apache.commons.dbcp.BasicDataSource" destroy-method="close">
 		<property name="driverClassName" value="org.mariadb.jdbc.Driver" />
 		<property name="url" value="jdbc:mysql://127.0.0.1:3306/kte901" />
 		<property name="username" value="kte901" />
-		<property name="password" value="class901" />
+		<property name="password" value="class901" />	
 	</bean>
 	
+	<bean id="dataSource1" class="net.sf.log4jdbc.Log4jdbcProxyDataSource">
+		<constructor-arg ref="dataSource" />
+		<property name="logFormatter">
+			<bean class="net.sf.log4jdbc.tools.Log4JdbcCustomFormatter">
+				<property name="loggingType" value="MULTI_LINE" />
+				<property name="sqlPrefix" value="SQL : " />
+			</bean>		
+		</property>
+	</bean>
+
 	<bean id="sqlSessionFactory" class="org.mybatis.spring.SqlSessionFactoryBean">
-		<property name="dataSource" ref="dataSource" />
-		<property name="mapperLocations" value="classpath:com/kte/mvc/sql/*.xml" />	<!-- xml위치 -->
-		<property name="configLocation" value="/WEB-INF/mybatis/mybatis-config.xml" />	<!-- 환경설정 파일 위치 -->
-		<property name="transactionFactory">	<!-- 자동커밋 -->
+		<property name ="dataSource" ref="dataSource1" />
+		<property name="mapperLocations" value="classpath:com/kte/mvc/sql/*.xml" />
+		<property name="configLocation" value="/WEB-INF/mybatis/mybatis-config.xml" />
+		<property name="transactionFactory">
 			<bean class="org.apache.ibatis.transaction.managed.ManagedTransactionFactory" />
 		</property>
 	</bean>

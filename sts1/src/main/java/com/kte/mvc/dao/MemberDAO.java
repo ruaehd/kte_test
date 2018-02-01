@@ -15,4 +15,9 @@ public class MemberDAO {
 		return sqlsession.insert("V3_Member.insertMember", vo);
 	}
 	
+	public int selectMemberLogin(V3_MemberVO vo) {
+		return sqlsession.selectOne("V3_Member.selectMemberLogin", vo);
+	}
+
+	
 }
