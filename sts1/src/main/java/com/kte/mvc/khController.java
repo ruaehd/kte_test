@@ -16,17 +16,17 @@ import com.kte.mvc.vo.V3_MemberVO;
 public class khController {
 
 	@RequestMapping(value="/kh_login.do", method=RequestMethod.GET)
-	public String login(HttpServletRequest request, HttpServletResponse response) {
+	public String login() {
 		return "kh_login";
 	}
 	
 	@RequestMapping(value="/kh_join.do", method=RequestMethod.GET)
-	public String join(HttpServletRequest request, HttpServletResponse response) {
+	public String join() {
 		return "kh_join";
 	}
 	
 	@RequestMapping(value="/kh_edit.do", method=RequestMethod.GET)
-	public String edit(HttpServletRequest request, HttpServletResponse response) {
+	public String edit() {
 		return "kh_edit";
 	}
 
