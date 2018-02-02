@@ -77,18 +77,19 @@
 	<script>
 		$(function(){
 			$('#form').validate({
-				
+						
 				groups: {
-				      username: "tel1 tel2 tel3",
-				    },
+					username: "tel1 tel2 tel3",
+				},
 
-				    errorPlacement: function(error, element) {
-
-				       if (element.attr("name") == "tel1" || element.attr("name") == "tel2" || element.attr("name") == "tel3")
-				         error.insertAfter("#tel3");
-					
-				       else
-				         error.insertAfter(element);
+				errorPlacement: function(error, element) {
+					if (element.attr("name") == "tel1" || element.attr("name") == "tel2" || element.attr("name") == "tel3"){
+						error.insertAfter("#tel3");
+					}
+					else{
+						 error.insertAfter(element);
+					}
+				        
 				 },
 				
 
