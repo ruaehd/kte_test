@@ -7,6 +7,7 @@ import javax.servlet.http.HttpServletResponse;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
@@ -18,7 +19,9 @@ import com.kte.mvc.vo.V3_MemberVO;
 public class Kh_Controller {
 	
 	@RequestMapping(value="/kh_join.do", method=RequestMethod.GET)
-	public String kh_join(HttpServletRequest request, HttpServletResponse response) {
+	public String kh_join(Model model) {
+		V3_MemberVO vo = new V3_MemberVO(); 
+		model.addAttribute("mvo", vo);
 		return "kh_join";
 	}
 	
