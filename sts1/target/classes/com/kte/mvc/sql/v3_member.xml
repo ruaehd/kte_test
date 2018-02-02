@@ -23,9 +23,10 @@
 		SELECT * FROM `v3_member` WHERE no=#{no} AND pw=SHA1(#{pw})
 	</select>
 	
-	<select id="selectMemberOne" resultType="V3_MemberVO">
-		SELECT * FORM `v3_member` WHERE no=#{no}
+	<select id="selectMemberOne" parameterType="String" resultType="V3_MemberVO">
+		SELECT * FROM v3_member WHERE no=#{no}	
 	</select>
+
 	<update id="updateMember" parameterType="V3_MemberVO">
 		UPDATE `v3_member` SET name#{name}, pw=#{pw}, birth=#{birth}, 
 		tel=#{tel}, phone=#{phone}, postcode=#{postcode}, addr=#{addr}

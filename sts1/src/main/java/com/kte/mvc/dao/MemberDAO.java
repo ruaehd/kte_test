@@ -9,7 +9,7 @@ import com.kte.mvc.vo.V3_MemberVO;
 @Service
 public class MemberDAO {
 	@Autowired
-	private SqlSession sqlsession = null;;
+	private SqlSession sqlsession = null;
 	
 	public int insertMember(V3_MemberVO vo) {
 		return sqlsession.insert("V3_Member.insertMember", vo);
@@ -18,6 +18,9 @@ public class MemberDAO {
 	public int selectMemberLogin(V3_MemberVO vo) {
 		return sqlsession.selectOne("V3_Member.selectMemberLogin", vo);
 	}
-
+	
+	public V3_MemberVO selectMemberOne(String id) {
+		return sqlsession.selectOne("V3_Member.selectMemberOne", id);
+	}
 	
 }

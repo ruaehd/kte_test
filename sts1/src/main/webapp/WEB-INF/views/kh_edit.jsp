@@ -3,56 +3,86 @@
 <%@ page session="false" %>
 <html>
 <head>
-	<title>v1_join</title>
+	<title>회원 정보 수정</title>
 	<link href="resources/css/bootstrap.css" rel="stylesheet" />
+	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.min.css" />
+	<style type="text/css">
+		input.error{
+		  color:red;
+		}
+		label.error{
+		  color:red;
+		}
+	</style>
+	
 </head>
 <body>
 	<div class="container">
-		<div style="width:600px; padding:30px 0; margin:0 auto">
-			<form action="join.do" method="post" id="form">
-				<h3>회원가입</h3>
-				<hr />
-				<div class="form-inline" style="margin-bottom:10px">
-					<label style="width:100px">회원번호</label>
-					<input type="text" name="id" id="id" class="form-control" />
-				</div>
-				<div class="form-inline" style="margin-bottom:10px">
-					<label style="width:100px">비밀번호</label>
-					<input type="password" name="pw" id="pw" class="form-control" />
-				</div>
-				<div class="form-inline" style="margin-bottom:10px">
-					<label style="width:100px"></label>
-					<input type="password" name="pw1" id="pw1" class="form-control" />
-				</div>
-				<div class="form-inline" style="margin-bottom:10px">
-					<label style="width:100px">이름</label>
-					<input type="text" name="name" class="form-control" />
-				</div>
-				<div class="form-inline" style="margin-bottom:10px">
-					<label style="width:100px">생년월일</label>
-					<input type="text" name="birth" class="form-control" />
-				</div>
-				<div class="form-inline" style="margin-bottom:10px">
-					<label style="width:100px">전화번호</label>
-					<input type="text" name="tel" class="form-control" />
-				</div>
-				<div class="form-inline" style="margin-bottom:10px">
-					<label style="width:100px">휴대폰</label>
-					<input type="text" name="phone" class="form-control" />
-				</div>
-				<div class="form-inline" style="margin-bottom:10px">
-					<label style="width:100px">우편번호</label>
-					<input type="text" name="postcode" class="form-control" />
-				</div>
-				<div class="form-inline" style="margin-bottom:10px">
-					<label style="width:100px">주소</label>
-					<input type="text" name="addr" class="form-control" />
+		
+		<div style="width:800px; padding:30px 0; margin:0 auto">
+			<form id="form"  class="form-horizontal">
+				<h3>회원 정보 수정</h3>
+				<div class="form-group">
+					<div align="center" class="col-sm-9">
+						<hr />
+					</div>
 				</div>
 				
-				<hr />
-				<div align="right">
-					<input type="submit" class="btn btn-success" value="회원가입" />
+				<div class="form-group">
+					<label class="col-sm-4 control-label" for="name">이름</label>
+					<div class="col-sm-5">
+						<input type="text" class="form-control" id="name" name="name" placeholder="이름을 입력하세요" />
+					</div>
 				</div>
+
+				<div class="form-group">
+					<label class="col-sm-4 control-label" for="tel1">전화번호</label>
+					<div class="col-sm-5">
+						<div class="form-inline">
+							<select class="form-control" name="tel1" id="tel1">
+								<option>선택</option>
+								<option>010</option>
+								<option>011</option>
+							</select>
+							<label>-</label>
+							<input type="text" style="width:80px" name="tel2" id="tel2" class="form-control" />
+							<label>-</label>
+							<input type="text" style="width:80px" name="tel3" id="tel3" class="form-control" />
+						</div>
+					</div>
+				</div>
+				
+				<div class="form-group">
+					<label class="col-sm-4 control-label" for="addr">주소</label>
+					<div class="col-sm-5">
+						<div class="form-inline post_search">
+							<input type="text" name="postcode" class="form-control" id="sample6_postcode" readonly/>
+							<input type="button" class="btn btn-danger" onclick="sample6_execDaumPostcode()" name="post_search" id="post_search" value="검색" />
+						</div>
+					</div>
+				</div>
+				
+				<div class="form-group">
+					<label class="col-sm-4 control-label" ></label>
+					<div class="col-sm-5">
+						<input type="text" class="form-control" id="sample6_address" name="addr1" placeholder="상세주소1" readonly/>
+					</div>
+				</div>
+				<div class="form-group">
+					<label class="col-sm-4 control-label" ></label>
+					<div class="col-sm-5">
+						<input type="text" class="form-control" id="sample6_address2" name="addr2" placeholder="상세주소2" />
+					</div>
+				</div>
+
+				<div class="form-group">
+					<div align="center" class="col-sm-9">
+						<hr />
+						<input type="submit" class="btn btn-success" value="정보 수정" />
+						<a href="#"><input type="button" class="btn btn-info" value="취소" /></a>
+					</div>
+				</div>
+				
 			</form>
 		</div>
 	</div>
@@ -61,19 +91,34 @@
 	<script type="text/javascript" src="resources/js/jquery.validate.min.js"></script>
 	<script type="text/javascript" src="resources/js/additional-methods.min.js"></script>
 	<script type="text/javascript" src="resources/js/localization/messages_ko.min.js"></script>
+	<script src="http://dmaps.daum.net/map_js_init/postcode.v2.js"></script>
 	
 	<script>
 		$(function(){
 			$('#form').validate({
-				/* 
-				required : true => 비어있는지 확인
-				digits : true => 숫자만 가능
-				minlength : 5 => 최소길이 5자이상
-				email : true => 이메일 형식만 가능(ex abc@naver.com)
-				agree : "required" => 체크박스에 체크가 되어야함 
-				*/
+				
+				onkeyup: function(element) { $(element).valid(); },
+				onfocusout: function(element) { $(element).valid(); },
+				
+				groups: {
+					username: "tel1 tel2 tel3"
+				},
+				errorPlacement: function(error, element) {
+					if (element.attr("name") == "tel1" || element.attr("name") == "tel2" || element.attr("name") == "tel3"){
+						error.insertAfter("#tel3");
+					}
+					else{
+						 error.insertAfter(element);
+					}
+
+					if (element.attr("name") == "postcode"){
+						error.insertAfter(".post_search");
+					}
+
+				 },
+				
 				submitHandler : function(){
-					var f = confirm("회원가입을 하시겠습니까?");
+					var f = confirm("정보를 수정 하시겠습니까?");
 					if(f){
 						return true;
 					} else{
@@ -81,86 +126,69 @@
 					}	
 				},
 				rules:{
-					id:{
-						required : true,
-						minlength : 5,
-						remote : 'idcheck.do?'
-					},
-					pw:{
-						required : true,
-						minlength : 5
-					},
-					pw1:{
-						required : true,
-						minlength : 5,
-						equalTo : pw
-					},
-					name:{
-						required : true
-					},
-					birth:{
-						required : true,
-						digits : true
-					},
-					tel:{
-						required : true,
-						digits : true
-					},
-					phone:{
-						required : true,
-						digits : true
-					},
-					postcode:{
-						required : true,
-						digits : true,
-						rangelength: [5, 5]
-					},
-					addr:{
-						required : true
-					}
+					name:{ required : true },
+					tel1:{ required : true, digits : true },
+					tel2:{ required : true, digits : true },
+					tel3:{ required : true, digits : true },
+					postcode:{ required : true },
+					addr1:{ required : true },
+					addr2:{ required : true }
 				},
 				messages:{
-					id:{
-						required : '내용이 없습니다',
-						minlength : '5자이상 입력하세요',
-						remote : '아이디가 중복입니다'
-					},
-					pw:{
-						required : '내용이 없습니다',
-						minlength : '5자이상 입력하세요'
-					},
-					pw1:{
-						required : '내용이 없습니다',
-						minlength : '5자이상 입력하세요',
-						equalTo : '암호가 일치하지 않습니다'
-					},
-					name:{
-						required : '내용이 없습니다'
-					},
-					birth:{
-						required : '내용이 없습니다',
-						digits : '숫자만 입력 가능합니다'
-					},
-					tel:{
-						required : '내용이 없습니다',
-						digits : '숫자만 입력 가능합니다'
-					},
-					phone:{
-						required : '내용이 없습니다',
-						digits : '숫자만 입력 가능합니다'
-					},
-					postcode:{
-						required : '내용이 없습니다',
-						digits : '숫자만 입력 가능합니다',
-						rangelength: '5자리 값으로 입력하세요'
-					},
-					addr:{
-						required : '내용이 없습니다'
-					}
-				}
+					name:{required : '&nbsp&nbsp&nbsp'+'필수입력항목 입니다'},
+					tel1:{required : '&nbsp&nbsp&nbsp'+'필수입력항목 입니다',
+						digits : '&nbsp&nbsp&nbsp'+'숫자만 입력가능합니다'},
+					tel2:{required : '&nbsp&nbsp&nbsp'+'필수입력항목 입니다',
+						digits : '&nbsp&nbsp&nbsp'+'숫자만 입력가능합니다'},
+					tel3:{required : '&nbsp&nbsp&nbsp'+'필수입력항목 입니다',
+						digits : '숫자만 입력가능합니다'},
+					postcode:{required : '&nbsp&nbsp&nbsp'+'필수입력항목 입니다'},
+					addr1:{required : '&nbsp&nbsp&nbsp'+'필수입력항목 입니다'},
+					addr2:{required : '&nbsp&nbsp&nbsp'+'필수입력항목 입니다'}
+				},
+				
+				highlight: function ( element, errorClass, validClass ) {
+					$( element ).parents( ".col-sm-5" ).addClass( "has-error" ).removeClass( "has-success" );
+					$( element ).next( "span" ).addClass( "glyphicon-remove" ).removeClass( "glyphicon-ok" );
+				},
+				unhighlight: function ( element, errorClass, validClass ) {
+					$( element ).parents( ".col-sm-5" ).addClass( "has-success" ).removeClass( "has-error" );
+					$( element ).next( "span" ).addClass( "glyphicon-ok" ).removeClass( "glyphicon-remove" );
+				},
+				
+			
+			
 			});
 			
 		});
+		
+		
+		function sample6_execDaumPostcode() {
+	        new daum.Postcode({
+	            oncomplete: function(data) {
+	                var fullAddr = '';
+	                var extraAddr = '';
+	                if (data.userSelectedType === 'R') {
+	                    fullAddr = data.roadAddress;
+	                } else {
+	                    fullAddr = data.jibunAddress;
+	                }
+	                if(data.userSelectedType === 'R'){
+	                    if(data.bname !== ''){
+	                        extraAddr += data.bname;
+	                    }
+	                    if(data.buildingName !== ''){
+	                        extraAddr += (extraAddr !== '' ? ', ' + data.buildingName : data.buildingName);
+	                    }
+	                    fullAddr += (extraAddr !== '' ? ' ('+ extraAddr +')' : '');
+	                }
+	                document.getElementById('sample6_postcode').value = data.zonecode;
+	                document.getElementById('sample6_address').value = fullAddr;
+	                document.getElementById('sample6_address2').focus();
+	            }
+	        }).open();
+	    }
+		
 	</script>
 </body>
 </html>

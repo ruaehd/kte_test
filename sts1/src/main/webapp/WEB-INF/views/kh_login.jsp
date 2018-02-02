@@ -13,7 +13,7 @@
 				<h3>로그인</h3>
 				<hr />
 				<div class="form-inline" style="margin-bottom:10px">
-					<label style="width:100px">회원번호</label>
+					<label style="width:100px">아이디</label>
 					<input type="text" name="id" id="id" class="form-control" placeholder="아이디를 입력하세요"/>
 				</div>
 				<div class="form-inline" style="margin-bottom:10px">
@@ -36,20 +36,19 @@
 	<script>
 		$(function(){
 			$(document).ready(function(){
-				$('#btn_submit').click(function(){	//btn이 클릭되면
-					var a =$('#id').val();	//id가 id인 태그의  값
-					var c =$('#pw').val();
+				$('#btn_submit').click(function(){
+					var a =$('#id').val();
+					var b =$('#pw').val();
 				
-					if(a==''){	//a가 비어 있다면
+					if(a==''){
 						alert("아이디를 입력하세요");
 						$('#id').focus();
 						return false;
 					}
-					if(c==''){	//c가 비어 있다면
+					if(b==''){
 						alert("비밀번호를 입력하세요");
 						$('#pw').focus();
 						return false;
-						//흠
 					}
 				})
 			});
