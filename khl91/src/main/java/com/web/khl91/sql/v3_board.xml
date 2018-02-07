@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="V3_Board">
+	
+	<insert id="boardwrite" parameterType="V3_Board">
+		INSERT INTO "V3_BOARD"(NO, title, content, writer, date1) 
+		VALUES(#{no}, #{title}, #{content}, #{writer}, SYSDATE)
+	</insert>
+	
+	<select id="boardlist" resultType="V3_Board">
+		SELECT * FROM "V3_BOARD" ORDER BY no DESC
+	</select>
+	
+	<select id="boardcontent" parameterType="int" resultType="V3_Board">
+		SELECT * FROM "V3_BOARD" WHERE no=#{no}
+	</select>
+	
+	<select id="selectLastNo" resultType="int">
+		SELECT NVL(MAX(no), 0) FROM V3_Board
+		<!-- mysql:ifnull(최대값, 0) -->
+		<!-- oracle:NVL(최대값, 0) -->
+	</select>
+	
+</mapper>

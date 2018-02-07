@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE configuration PUBLIC "-//mybatis.org//DTD Config 3.0//EN" "HTTP://mybatis.org/dtd/mybatis-3-config.dtd">
+
+<configuration>
+	<settings>
+		<setting name="cacheEnabled" value="true"/>
+		<setting name="multipleResultSetsEnabled" value="true"/>
+		<setting name="useGeneratedKeys" value="true" />
+	</settings>
+	
+	<!--  v3_member.xml에서 vo를 적을 경우 V3_Member -->
+	<typeAliases>
+		<typeAlias alias="V3_Member" type="com.web.khl91.vo.V3_MemberVO" />
+		<typeAlias alias="V3_Board" type="com.web.khl91.vo.V3_BoardVO" />
+	</typeAliases>
+</configuration>

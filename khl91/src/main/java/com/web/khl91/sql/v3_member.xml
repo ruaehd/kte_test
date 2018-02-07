@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="V3_Member">
+	
+	<select id="login" parameterType="V3_Member" resultType="V3_Member">
+		SELECT * FROM "V3_MEMBER" WHERE EMAIL=#{email} AND PW=#{pw}
+	</select>
+	
+	<insert id="join" parameterType="V3_Member">
+		INSERT INTO "V3_MEMBER"(email, pw, name, phone, date1) 
+		VALUES(#{email}, #{pw}, #{name}, #{phone}, SYSDATE)
+	</insert>
+	
+
+</mapper>
