@@ -9,6 +9,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.web.khl91.vo.V3_BoardVO;
+import com.web.khl91.vo.V3_Board_ImgVO;
 
 
 @Service
@@ -21,8 +22,8 @@ public class V3_BoardDAO {
 		return sqlsession.insert("V3_Board.boardwrite", vo);
 	}
 	
-	public List<V3_BoardVO> boardlist(V3_BoardVO vo) {
-		return sqlsession.selectList("V3_Board.boardlist", vo);
+	public List<V3_BoardVO> boardlist(int page) {
+		return sqlsession.selectList("V3_Board.boardlist", page);
 	}
 	
 	public V3_BoardVO boardcontent(int no) {
@@ -31,6 +32,10 @@ public class V3_BoardDAO {
 	
 	public int selectLastNo() {
 		return sqlsession.selectOne("V3_Board.selectLastNo");
+	}
+	
+	public int insertBoardImg(V3_Board_ImgVO vo1) {
+		return sqlsession.insert("V3_Board.insertBoardImg", vo1);
 	}
 	
 }

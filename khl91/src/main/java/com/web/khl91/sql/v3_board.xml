@@ -3,13 +3,20 @@
 
 <mapper namespace="V3_Board">
 	
+	<insert id="insertBoardImg" parameterType="V3_Board_Img">
+		INSERT INTO V3_Board_IMG(no, filename, filedata, board_no, date1) VALUES(SEQ_V3_BOARD_IMG_NO.NEXTVAL, #{filename}, #{filedata, jdbcType=BLOB}, #{board_no}, SYSDATE)
+	</insert>
+	
 	<insert id="boardwrite" parameterType="V3_Board">
 		INSERT INTO "V3_BOARD"(NO, title, content, writer, date1) 
 		VALUES(#{no}, #{title}, #{content}, #{writer}, SYSDATE)
 	</insert>
 	
-	<select id="boardlist" resultType="V3_Board">
-		SELECT * FROM "V3_BOARD" ORDER BY no DESC
+	<select id="boardlist" parameterType="int" resultType="V3_Board">
+		SELECT * FROM 
+			(SELECT no, title, content, writer, hit, date1, 
+			ROW_NUMBER() OVER (ORDER BY no DESC) rown FROM V3_BOARD )
+			WHERE rown BETWEEN #{page} and #{page}+9
 	</select>
 	
 	<select id="boardcontent" parameterType="int" resultType="V3_Board">

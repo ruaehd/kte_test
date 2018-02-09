@@ -24,7 +24,7 @@
 			</div>
 		</div> <!-- End Topper -->
 		
-	  	<form:form action="boardwrite.do" modelAttribute="bvo" method="post">
+	  	<form:form action="boardwrite.do" modelAttribute="bvo" method="post" enctype="multipart/form-data">
 			<div style="width:800px; padding:30px 0; margin:10px auto">
 				<h3>글쓰기</h3>
 				<hr />
@@ -44,6 +44,18 @@
 					<div class="form-inline" style="margin-bottom:10px">
 						<label style="width:100px">내용</label>
 						<form:textarea rows="6" path="content" style="width:50%" class="form-control" ></form:textarea>
+					</div>
+					<div class="form-inline" style="margin-bottom:10px">
+						<label style="width:100px">파일 첨부</label>
+						<input type="file" name="file_0" style="width:50%" class="form-control" />
+					</div>
+					<div class="form-inline" style="margin-bottom:10px">
+						<label style="width:100px"></label>
+						<input type="file" name="file_1" style="width:50%" class="form-control" />
+					</div>
+					<div class="form-inline" style="margin-bottom:10px">
+						<label style="width:100px"></label>
+						<input type="file" name="file_2" style="width:50%" class="form-control" />
 					</div>
 				</div>
 				<hr />

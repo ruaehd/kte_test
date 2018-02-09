@@ -50,11 +50,27 @@
 
 			</table>
 			<hr />
+			<ul id="pagination-demo" class="pagination-sm"></ul>
 			<div align="right">
 				<a href="boardwrite.do"><input type="button" class="btn btn-success" value="글쓰기"/></a>
 			</div>
 		</div>
 	</div>
-
+	
+	<script src="resources/js/jquery-1.11.1.js"></script>
+	<script src="http://ihongss.com/assets/js/jquery.twbsPagination-1.3.1.js"></script>
+	<script>
+		$(function(){
+			$('#pagination-demo').twbsPagination({
+				totalPages: 35,
+				visiblePages: 7,
+				href:'?page={{number}}',
+				//initiateStartPageClick : false,
+				onPageClick: function (event, page) {
+					/* window.location.href="board.do?page="+ page; */
+			        }
+			    });
+		});
+	</script>
 </body>
 </html>
