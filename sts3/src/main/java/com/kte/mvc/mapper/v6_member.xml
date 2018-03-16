@@ -1,0 +1,74 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="V6_Member">
+	<select id="insertMember" parameterType="com.kte.mvc.vo.V6_Member">
+		INSERT ALL
+			INTO V6_MEMBER(MEM_ID, MEM_PW, MEM_NAME, MEM_DATE)
+				VALUES(#{mem_id}, #{mem_pw}, #{mem_name}, SYSDATE)
+			<foreach item="tmp" collection="list" separator=" ">
+				INTO V6_MEMBER_CHK(MEMC_NO, MEM_ID, MEMC_TITLE, MEMC_DATE)
+					VALUES(#{tmp.memc_no}, #{mem_id}, #{tmp.memc_title}, SYSDATE)
+			</foreach>
+		SELECT * FROM DUAL
+	</select>
+	
+	<!-- mysql 멀티insert
+	<insert id="insertMember" parameterType="com.kte.mvc.vo.V6_Member">
+		INSERT INTO V6_MEMBER(MEM_ID, MEM_PW, MEM_NAME, MEM_DATE)
+			VALUES(#{mem_id}, #{mem_pw}, #{mem_name}, NOW())
+		<foreach item="tmp" collection="list" separator=" ">
+			INSERT INTO V6_MEMBER_CHK(MEMC_NO, MEM_ID, MEMC_TITLE, MEMC_DATE)
+				VALUES(#{tmp.memc_no}, #{mem_id}, #{tmp.memc_title}, NOW())
+		</foreach>
+	</insert> -->
+	
+	
+	
+	<select id="selectMemcNo" resultType="int">
+		SELECT NVL(MAX(memc_no), 0) FROM V6_MEMBER_CHK
+	</select>
+	
+	<select id="selectMemberList" resultType="com.kte.mvc.vo.V6_Member">
+		SELECT * FROM V6_MEMBER 	
+	</select>
+	
+	<update id="updateMemberAll" parameterType="java.util.List">
+		UPDATE V6_MEMBER SET
+			MEM_PW = (CASE 
+				<foreach collection="list" item="vo" separator=" ">
+				WHEN MEM_ID = #{vo.mem_id} THEN #{vo.mem_pw}
+				</foreach>
+			END ),
+			MEM_NAME = (CASE 
+				<foreach collection="list" item="vo" separator=" ">
+				WHEN MEM_ID = #{vo.mem_id} THEN #{vo.mem_name}
+				</foreach>
+			END )
+		WHERE MEM_ID IN(
+			<foreach collection="list" item="vo" separator=",">
+				#{vo.mem_id}
+			</foreach>
+		)
+	</update>
+	
+	<delete id="deleteMemberAll" parameterType="java.util.List">
+		DELETE FROM V6_MEMBER WHERE MEM_ID IN(
+		<foreach collection="list" item="str" separator=",">
+			#{str}
+		</foreach>
+		)
+	</delete>
+	
+	<delete id="deleteMemberProc" statementType="CALLABLE" parameterType="java.util.Map">
+		call V6_MEMBER_DEL(
+			#{out_id, mode=IN, jdbcType=VARCHAR},
+			#{in_ret, mode=OUT, jdbcType=INTEGER}
+		)
+		
+	</delete>
+	
+	<select id="selectMemberLogin" parameterType="com.kte.mvc.vo.V6_Member" resultType="com.kte.mvc.vo.V6_Member">
+		SELECT MEM_ID, MEM_NAME FROM V6_MEMBER WHERE MEM_ID=#{mem_id} AND MEM_PW=#{mem_pw}
+	</select>
+</mapper>

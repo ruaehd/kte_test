@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="V3_Cart">
+	
+	<select id="insertCart" statementType="CALLABLE" parameterType="V3_Cart">
+		call V3_CART_INSERT_UPDATE(
+			#{cart_item},
+			#{cart_cnt},
+			#{cart_user}
+		)
+	</select>
+
+	<select id="selectCartList" parameterType="String" resultType="V3_Cart">
+		SELECT 
+			c.cart_no, c.cart_item, i.name, i.price, c.cart_cnt 
+		FROM 
+			V3_CART c
+		INNER JOIN
+			V3_ITEM i
+		ON 
+			c.cart_item = i.code
+		WHERE 
+			c.cart_user = #{cart_user}
+	</select>
+	
+
+</mapper>

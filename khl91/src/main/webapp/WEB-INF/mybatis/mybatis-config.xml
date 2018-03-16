@@ -13,5 +13,6 @@
 		<typeAlias alias="V3_Member" type="com.web.khl91.vo.V3_MemberVO" />
 		<typeAlias alias="V3_Board" type="com.web.khl91.vo.V3_BoardVO" />
 		<typeAlias alias="V3_Board_Img" type="com.web.khl91.vo.V3_Board_ImgVO" />
+		<typeAlias alias="V3_Board_Reply" type="com.web.khl91.vo.V3_Board_ReplyVO" />
 	</typeAliases>
 </configuration>

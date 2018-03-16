@@ -1,7 +1,10 @@
 <%@ page pageEncoding="UTF-8" contentType="text/html; charset=UTF-8"%>
-<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%> 
+<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/functions" prefix="fn"%> 
 <%@ taglib uri="http://www.springframework.org/tags/form" prefix="form" %>
+
 <%@ page session="false"%>
+<% pageContext.setAttribute("newLineChar", "\n"); %>
 <!DOCTYPE html>
 <html>
 <head>
@@ -29,10 +32,10 @@
 				<hr />
 				<table class="table">
 					<tr>
-						<th>글번호</th>
-						<td>${vo.no}</td>
-						<th>작성자</th>
-						<td>${vo.writer}</td>
+						<th style="width:10%">글번호</th>
+						<td style="width:40%">${vo.no}</td>
+						<th style="width:10%">작성자</th>
+						<td style="width:40%">${vo.writer}</td>
 					</tr>
 					<tr>
 						<th>글제목</th>
@@ -42,12 +45,26 @@
 					</tr>
 					<tr>
 						<th>내용</th>
-						<td colspan="3">${vo.content}</td>
+						<td colspan="3">${fn:replace(vo.content, newLineChar, "<br />")}</td>
+					</tr>
+					<tr>
+						<th>이미지1</th>
+						<td colspan="3"><img src="boardimg.do?no=${vo.no}&idx=1" width="200px"></td>
+					</tr>
+					<tr>
+						<th>이미지2</th>
+						<td colspan="3"><img src="boardimg.do?no=${vo.no}&idx=2" width="200px"></td>
+					</tr>
+					<tr>
+						<th>이미지3</th>
+						<td colspan="3"><img src="boardimg.do?no=${vo.no}&idx=3" width="200px"></td>
 					</tr>
 				</table>
 				<hr />
 				<div align="right">
-					<a href="/khl91/board.do"><input type="button" class="btn btn-info" value="목록"/></a>
+					<a href="board.do" class="btn btn-info">목록</a>
+					<a href="boarddelete.do?no=${vo.no}" class="btn btn-danger">삭제</a>
+					<a href="boardreply.do?no=${vo.no}" class="btn btn-success">댓글</a>
 				</div>
 			</div>
 

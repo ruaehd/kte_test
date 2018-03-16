@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="V4_Book">
+	
+	<select id="selectBookList" resultType="V4_Book">
+		SELECT * FROM V4_BOOK
+	</select>
+	
+	<insert id="insertBookCheckout" parameterType="V4_BookCheckout">
+		INSERT INTO V4_CHECKOUT (checkout_no, checkout_start_date, checkout_end_date, book_code, member_id, checkout_date)
+		VALUES(#{checkout_no}, #{checkout_start_date}, #{checkout_end_date}, #{checkoutbook_code}, #{member_id}, SYSDATE)
+	</insert>
+	
+	<select id="selectBookCheckoutList" parameterType="String" resultType="V4_BookCheckout">
+		SELECT 
+			cb.CHECKOUT_NO, cb.BOOK_TITLE, 
+			cb.CHECKOUT_START_DATE, 
+			cb.CHECKOUT_END_DATE, m.MEMBER_NAME 
+		FROM 
+			(SELECT * FROM V4_CHECKOUT c
+			INNER JOIN V4_BOOK b
+			ON b.BOOK_CODE = c.BOOK_CODE
+			WHERE c.CHECKOUT_CHK = 1) cb
+		INNER 
+			JOIN V4_MEMBER m
+		ON 
+			cb.MEMBER_ID = m.MEMBER_ID
+		WHERE 
+			m.MEMBER_ID = #{member_id}
+	</select>
+	
+	<update id="deleteBookCheckoutList" parameterType="int">
+		UPDATE V4_CHECKOUT SET CHECKOUT_CHK=0 WHERE CHECKOUT_NO=#{code}
+	</update>
+	
+</mapper>

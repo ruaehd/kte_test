@@ -11,7 +11,7 @@
 	<div class="container">
 		<div style="width:800px; padding:30px 0; margin:0 auto">
 			<form action="login.do" method="post" class="form-horizontal">
-				<h3>회원가입</h3>
+				<h3>로그인</h3>
 				<div class="form-group">
 					<div align="center" class="col-sm-9">
 						<hr />

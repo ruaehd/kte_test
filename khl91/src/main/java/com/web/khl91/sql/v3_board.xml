@@ -24,9 +24,36 @@
 	</select>
 	
 	<select id="selectLastNo" resultType="int">
-		SELECT NVL(MAX(no), 0) FROM V3_Board
+		SELECT NVL(MAX(no), 0) FROM V3_BOARD
 		<!-- mysql:ifnull(최대값, 0) -->
 		<!-- oracle:NVL(최대값, 0) -->
+	</select>
+	
+	
+	<resultMap type="V3_Board_Img" id="resultImg">
+		<result column="filedata" property="filedata" jdbcType="BLOB" />
+	</resultMap>
+	<select id="selectBoardImg" parameterType="java.util.Map" resultMap="resultImg">
+		SELECT * FROM
+			(SELECT filedata, ROW_NUMBER() OVER (ORDER BY no ASC) rown FROM V3_Board_IMG WHERE board_no=#{no})
+		WHERE rown=#{idx}
+	</select>
+	
+	<!-- 프로시져 호출 시에는   statementType="CALLABLE"를 추가함-->
+	<select id="deleteBoard" statementType="CALLABLE" parameterType="java.util.Map">
+		call V3_BOARD_ITEM_DEL(#{no, mode=IN, jdbcType=INTEGER}, #{ret, mode=OUT, jdbcType=INTEGER})
+	</select>
+	
+	<select id="selectLastReplyNo" resultType="int">
+		SELECT NVL(MAX(no), 1000) FROM V3_BOARD_REPLY
+	</select>
+	
+	<insert id="insertBoardReply" parameterType="V3_Board_Reply">
+		INSERT INTO V3_BOARD_REPLY(no, content,  writer, board_no, date1) VALUES(#{no}, #{content, jdbcType=CLOB}, #{writer}, #{board_no}, SYSDATE)
+	</insert>
+	
+	<select id="countBoardReply" parameterType="int" resultType="int">
+		SELECT count(*) FROM V3_BOARD_REPLY WHERE board_no = #{board_no}
 	</select>
 	
 </mapper>

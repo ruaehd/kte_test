@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="V5_CurApp">
+	<select id="selectDeptList" resultType="V5_Department">
+		SELECT * FROM V5_DEPARTMENT
+	</select>
+	
+	<select id="selectSjctList" resultType="V5_Subject">
+		SELECT * FROM V5_SUBJECT
+	</select>
+	
+	<insert id="insertCurApp" parameterType="V5_CourseApplication">
+		INSERT INTO V5_COURSE_APPLICATION (crs_code, dept_cd, sjct_cd, std_id, crs_date)
+		VALUES(#{crs_code}, #{dept_cd}, #{sjct_cd}, #{std_id}, SYSDATE)
+	</insert>
+	
+	<select id="selectCurAppList" parameterType="String" resultType="V5_CourseApplication">
+		SELECT cds.CRS_CODE, cds.DEPT_NAME, cds.SJCT_NAME, st.STD_NAME, cds.CRS_DATE FROM
+			(SELECT * FROM
+				(SELECT * FROM V5_COURSE_APPLICATION c
+					INNER JOIN V5_DEPARTMENT d
+					ON d.DEPT_CD = c.DEPT_CD
+					WHERE c.CRS_CHK = 1
+				) cd
+			INNER JOIN V5_SUBJECT s
+			ON cd.SJCT_CD = s.SJCT_CD
+			) cds
+		INNER JOIN V5_STUDENT st
+		ON cds.STD_ID = st.STD_ID
+		WHERE st.STD_ID = #{std_id}
+		ORDER BY cds.CRS_CODE DESC
+	</select>
+	
+	<update id="delectCurApp" parameterType="String">
+		UPDATE V5_COURSE_APPLICATION SET CRS_CHK=0 WHERE CRS_CODE=#{code}
+	</update>
+	
+</mapper>

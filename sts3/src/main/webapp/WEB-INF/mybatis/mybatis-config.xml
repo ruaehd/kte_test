@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE configuration PUBLIC "-//mybatis.org//DTD Config 3.0//EN" "HTTP://mybatis.org/dtd/mybatis-3-config.dtd">
+	
+<configuration>
+	<settings>
+		<setting name="cacheEnabled" value="true" />
+		
+		<!--<setting name="lazyLoadingEnabled" value="true" /> -->
+		<setting name="aggressiveLazyLoading" value="true" />
+		<setting name="multipleResultSetsEnabled" value="true" />
+		<setting name="useColumnLabel" value="true" />
+		
+		<!-- <setting name="autoMappingBehavior" value="false" /> -->
+		<setting name="useGeneratedKeys" value="true" />
+		<setting name="defaultExecutorType" value="REUSE" />
+		<setting name="defaultStatementTimeout" value="5000" />
+	</settings>
+	
+	<typeAliases>
+		<typeAlias alias="V3_Board" type="com.kte.mvc.vo.V3_Board" />
+		<typeAlias alias="V3_Member" type="com.kte.mvc.vo.V3_Member" />
+		<typeAlias alias="V3_Item" type="com.kte.mvc.vo.V3_Item" />
+		<typeAlias alias="V3_Order" type="com.kte.mvc.vo.V3_Order" />
+		<typeAlias alias="V3_Cart" type="com.kte.mvc.vo.V3_Cart" />
+		<typeAlias alias="V4_Book" type="com.kte.mvc.vo.V4_Book" />
+		<typeAlias alias="V4_BookCheckout" type="com.kte.mvc.vo.V4_BookCheckout" />
+		<typeAlias alias="V5_Subject" type="com.kte.mvc.vo.V5_Subject" />
+		<typeAlias alias="V5_Department" type="com.kte.mvc.vo.V5_Department" />
+		<typeAlias alias="V5_CourseApplication" type="com.kte.mvc.vo.V5_CourseApplication" />
+	</typeAliases>
+	
+</configuration>

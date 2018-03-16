@@ -41,7 +41,7 @@
 					<c:forEach var="vo" items="${list}">
 						<tr>
 							<td>${vo.no}</td>
-							<td><a href="boardcontent.do?no=${vo.no}">${vo.title}</a></td>
+							<td><a href="boardcontent.do?no=${vo.no}">${vo.title}</a> [${vo.replycnt}]</td>
 							<td>${vo.writer}</td>
 							<td>${vo.hit}</td>
 							<td>${vo.date1}</td>

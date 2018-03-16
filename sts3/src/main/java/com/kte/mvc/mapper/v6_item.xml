@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="V6_Item">
+	
+	<select id="selectItemAList" resultType="com.kte.mvc.vo.V6_ItemA">
+		SELECT * FROM V6_ITEM_A
+	</select>
+	
+	<select id="selectItemBList" parameterType="int" resultType="com.kte.mvc.vo.V6_ItemB">
+		SELECT * FROM V6_ITEM_B WHERE ITMA_NO = #{code}
+	</select>
+	
+	<select id="selectItemCList" parameterType="int" resultType="com.kte.mvc.vo.V6_ItemC">
+		SELECT * FROM V6_ITEM_C WHERE ITMB_NO = #{code}
+	</select>
+</mapper>

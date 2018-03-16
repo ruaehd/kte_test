@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="V6_BoardReply">
+	
+	<!-- myqsl용
+	<insert id="insertBoardReply"  parameterType="com.kte.mvc.vo.V6_BoardReply" useGeneratedKeys="true" keyProperty="rep_no">
+		INSERT INTO V6_BOARDREPLY
+			(REP_NO, REP_CONTENT, REP_WRITER, BRD_NO, REP_DATE)
+		VALUES
+			(SEQ_V6_BOARDREPLY_NO.NEXTVAL, #{rep_content}, #{rep_writer}, #{brd_no}, SYSDATE)
+	</insert> -->
+	
+	<insert id="insertBoardReply" parameterType="com.kte.mvc.vo.V6_BoardReply">
+		<selectKey keyProperty="rep_no" resultType="int" order="AFTER">
+			SELECT SEQ_V6_BOARDREPLY_NO.CURRVAL FROM DUAL
+		</selectKey>
+	
+		INSERT INTO V6_BOARDREPLY
+			(REP_NO, REP_CONTENT, REP_WRITER, BRD_NO, REP_DATE)
+		VALUES
+			(SEQ_V6_BOARDREPLY_NO.NEXTVAL, #{rep_content}, #{rep_writer}, #{brd_no}, SYSDATE) 
+	</insert>
+	
+	<select id="selectBoardReply" parameterType="int" resultType="com.kte.mvc.vo.V6_BoardReply">
+		SELECT * FROM V6_BOARDREPLY WHERE REP_NO=#{rep_no}
+	</select>
+	
+	<select id="selectBoardReplyList" parameterType="int" resultType="com.kte.mvc.vo.V6_BoardReply">
+		SELECT * FROM V6_BOARDREPLY WHERE BRD_NO=#{brd_no} ORDER BY REP_DATE DESC
+	</select>	
+
+</mapper>

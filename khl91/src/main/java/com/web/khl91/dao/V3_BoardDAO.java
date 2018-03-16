@@ -1,6 +1,7 @@
 package com.web.khl91.dao;
 
 import java.util.List;
+import java.util.Map;
 
 import javax.annotation.Resource;
 
@@ -10,6 +11,7 @@ import org.springframework.stereotype.Service;
 
 import com.web.khl91.vo.V3_BoardVO;
 import com.web.khl91.vo.V3_Board_ImgVO;
+import com.web.khl91.vo.V3_Board_ReplyVO;
 
 
 @Service
@@ -36,6 +38,27 @@ public class V3_BoardDAO {
 	
 	public int insertBoardImg(V3_Board_ImgVO vo1) {
 		return sqlsession.insert("V3_Board.insertBoardImg", vo1);
+	}
+	
+	public V3_Board_ImgVO selectBoardImg(Map<String, Integer> map) {
+		return sqlsession.selectOne("V3_Board.selectBoardImg", map);
+	}
+	
+	//프로시져는 selectOne로 수행함
+	public void V3_Board_Procedure(Map<String, Object> map) {
+		sqlsession.selectOne("V3_Board.deleteBoard", map);
+	}
+	
+	public int selectLastReplyNo() {
+		return sqlsession.selectOne("V3_Board.selectLastReplyNo");
+	}
+	
+	public int insertBoardReply(V3_Board_ReplyVO vo) {
+		return sqlsession.insert("V3_Board.insertBoardReply", vo);
+	}
+	
+	public int countBoardReply(int no) {
+		return sqlsession.selectOne("V3_Board.countBoardReply", no);
 	}
 	
 }

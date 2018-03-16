@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="V6_Board">
+	<select id="selectBoardList" resultType="com.kte.mvc.vo.V6_Board">
+		SELECT
+		BRD_NO, BRD_TITLE,
+		BRD_WRITER,
+		TO_CHAR(BRD_HIT, '999,999,999,999') BRD_HIT1,
+		TO_CHAR(BRD_DATE, 'YYYY-MM-DD') BRD_DATE
+		FROM
+		V6_BOARD
+		ORDER BY BRD_NO
+		DESC
+	</select>
+
+	<!-- 값이 없다면 NVL -->
+	<select id="selectLastNo" resultType="int">
+		SELECT NVL(MAX(BRD_NO),0)
+		FROM V6_BOARD
+	</select>
+
+	<insert id="insertBoard" parameterType="com.kte.mvc.vo.V6_Board">
+		INSERT INTO V6_BOARD
+		(BRD_NO, BRD_TITLE, BRD_CONTENT,BRD_WRITER, BRD_HIT, BRD_DATE)
+		VALUES
+		(#{brd_no}, #{brd_title}, #{brd_content}, #{brd_writer}, #{brd_hit},
+		SYSDATE)
+	</insert>
+
+	<update id="updateBoardHit" parameterType="int">
+		UPDATE V6_BOARD SET
+		BRD_HIT = BRD_HIT + 1 WHERE BRD_NO = #{brd_no}
+	</update>
+
+	<select id="selectBoardOne" parameterType="int" resultType="com.kte.mvc.vo.V6_Board">
+		SELECT * FROM V6_BOARD WHERE BRD_NO=#{brd_no}
+	</select>
+	
+	<select id="selectBoardPrev" parameterType="int" resultType="int">
+		SELECT NVL (MAX(BRD_NO), 0) BRD_NO FROM V6_BOARD WHERE BRD_NO <![CDATA[ < ]]> #{brd_no}	
+	</select>
+	
+	<select id="selectBoardNext" parameterType="int" resultType="int">
+		SELECT NVL (MIN(BRD_NO), 0) BRD_NO FROM V6_BOARD WHERE BRD_NO <![CDATA[ > ]]> #{brd_no}	
+	</select>
+	
+</mapper>

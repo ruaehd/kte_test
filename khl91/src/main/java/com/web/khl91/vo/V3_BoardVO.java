@@ -7,8 +7,15 @@ public class V3_BoardVO {
 	private String writer = null;
 	private int hit = 0;
 	private String date1 = null;
+	private int replycnt = 0;
 	
 	
+	public int getReplycnt() {
+		return replycnt;
+	}
+	public void setReplycnt(int replycnt) {
+		this.replycnt = replycnt;
+	}
 	public int getNo() {
 		return no;
 	}

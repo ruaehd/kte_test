@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="V3_Order">
+	
+	<insert id="insertOrder" parameterType="V3_Order">
+		INSERT INTO V3_ORDER
+			(no, item_no, email, cnt, date1)  
+		VALUES (
+			SEQ_V3_ORDER_NO.NEXTVAL,
+			#{item_no},
+			#{email},
+			#{cnt},
+			SYSDATE)
+	</insert>
+	
+	<select id="selectOrderList" parameterType="String" resultType="V3_Order">
+		SELECT 
+			m.name m_name, m.email, oi.no, oi.email, oi.item_no, oi.cnt, oi.date1, oi.name i_name, oi.price
+		FROM
+			(SELECT 
+				o.no, o.email, o.item_no, o.cnt, o.date1, i.name, i.price
+			FROM V3_ORDER o 
+			INNER JOIN V3_ITEM i
+			ON o.item_no = i.code) oi
+		INNER JOIN V3_MEMBER m
+		ON oi.email = m.email
+		WHERE m.email = #{email}
+	</select>
+	
+	
+</mapper>
