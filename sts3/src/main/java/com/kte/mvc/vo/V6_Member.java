@@ -9,6 +9,23 @@ public class V6_Member {
 	private String mem_date = null;
 	private List<V6_Member_chk> list = null;
 	
+	private String tmp_id = null;
+	private String remote_addr = null;
+
+	
+	
+	public String getTmp_id() {
+		return tmp_id;
+	}
+	public void setTmp_id(String tmp_id) {
+		this.tmp_id = tmp_id;
+	}
+	public String getRemote_addr() {
+		return remote_addr;
+	}
+	public void setRemote_addr(String remote_addr) {
+		this.remote_addr = remote_addr;
+	}
 	public List<V6_Member_chk> getList() {
 		return list;
 	}

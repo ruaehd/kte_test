@@ -1,4 +1,4 @@
-/*package com.kte.mvc.controller;
+package com.kte.mvc.controller;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -24,7 +24,7 @@ import com.kte.mvc.vo.V6_Member_chk;
 
 @Controller
 @SessionAttributes({"map"})
-public class Member1Controller {
+public class Member2Controller {
 	
 	@Autowired private V6_MemberDAO mDAO = null;
 	
@@ -218,4 +218,3 @@ public class Member1Controller {
 	}
 
 }
-*/
