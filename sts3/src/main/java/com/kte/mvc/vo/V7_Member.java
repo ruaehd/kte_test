@@ -7,7 +7,16 @@ public class V7_Member {
 	private String mem_tel = null;
 	private String mem_email = null;
 	private String mem_date = null;
+	private boolean mem_auth = false;
 	
+	
+	
+	public boolean isMem_auth() {
+		return mem_auth;
+	}
+	public void setMem_auth(boolean mem_auth) {
+		this.mem_auth = mem_auth;
+	}
 	public String getMem_id() {
 		return mem_id;
 	}

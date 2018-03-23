@@ -13,6 +13,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.kte.mvc.func.Function;
 import com.kte.mvc.mapper1.V7_MemberDAO;
 import com.kte.mvc.vo.V7_Member;
 
@@ -50,7 +51,7 @@ public class V7_AjaxController {
 			@RequestParam("mem_pw") String mem_pw,
 			@RequestParam("mem_name") String mem_name,
 			@RequestParam("mem_tel") String mem_tel,
-			@RequestParam(value="mem_email", defaultValue="") String mem_email) {
+			@RequestParam(value="mem_email", defaultValue="") String mem_email) throws Exception {
 		
 		response.setHeader("Access-Control-Allow-Methods", "POST, GET, OPTIONS, DELETE");
 		response.setHeader("Access-Control-Max-Age", "3600");
@@ -61,7 +62,7 @@ public class V7_AjaxController {
 		
 		V7_Member vo = new V7_Member();
 		vo.setMem_id(mem_id);
-		vo.setMem_pw(mem_pw);
+		vo.setMem_pw(Function.getEncSHA256(mem_pw));
 		vo.setMem_name(mem_name);
 		vo.setMem_tel(mem_tel);
 		vo.setMem_email(mem_email);
@@ -73,5 +74,31 @@ public class V7_AjaxController {
 			map.put("ret", "y");
 		}
 		return map;
+	}
+	
+	@RequestMapping(value="v7_ajax_memberlogin.do", method= {RequestMethod.GET, RequestMethod.POST})
+	public @ResponseBody V7_Member memberLogin(
+			HttpServletResponse response, 
+			@RequestParam("key") String key,
+			@RequestParam("mem_id") String mem_id, 
+			@RequestParam("mem_pw") String mem_pw) throws Exception{
+		response.setHeader("Access-Control-Allow-Methods", "POST, GET, OPTIONS, DELETE");
+		response.setHeader("Access-Control-Max-Age", "3600");
+		response.setHeader("Access-Control-Allow-Headers", "x-requested-with");
+		response.setHeader("Access-Control-Allow-Origin", "*");
+		response.setContentType("application/json");
+		response.setCharacterEncoding("UTF-8");
+		
+		if(key.equals("key")) {
+			V7_Member vo = new V7_Member();
+			vo.setMem_id(mem_id);
+			vo.setMem_pw(Function.getEncSHA256(mem_pw));
+			return mDAO.memberLogin(vo);
+		}
+		return null;
+			
+		
+		
+		
 	}
 }

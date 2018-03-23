@@ -17,6 +17,7 @@
 			<mapping path="/**" />
 			<exclude-mapping path="/memberlogout**"/>
 			<exclude-mapping path="/memberlogin**"/>
+			<exclude-mapping path="/v7_memberauth.do**"/>
 			<exclude-mapping path="/resources**"/>
 			<exclude-mapping path="/resources/**"/>
 			<beans:bean class="com.kte.mvc.interceptor.MainInterceptor" />
