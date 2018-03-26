@@ -11,20 +11,14 @@
 
 <body>
 	<div class="container">
-		<c:if test="${sessionScope.vo.mem_id eq null}">
-			<a href="v7_memberlogin.do">로그인</a>
-			<a href="#">아이디/비밀번호 찾기</a>
-			<a href="v7_memberjoin.do">회원가입</a>
-		</c:if>
-		<c:if test="${sessionScope.vo.mem_id ne null}">
-			${sessionScope.vo.mem_name}님 로그인
-			<a href="v7_memberedit.do">회원정보 수정</a>
-			<a href="#">비밀번호 변경</a>
-			<a href="v7_memberlogout.do">로그아웃</a>
-		</c:if>
-		
-		<a href="v7_board.do">게시판</a>
-		<a href="#">오시는 길</a>
+		<form:form action="v7_boardw.do" method="post" modelAttribute="vo">
+			글번호<form:input type="text" path="brd_no" readonly="true"/><br />
+			글제목<form:input type="text" path="brd_title"/><br />
+			글내용<form:textarea path="brd_content"/><br />
+			아이디<form:input type="text" path="mem_id" readonly="true"/><br />
+			<input type="submit" value="글쓰기"/><br />
+			<a href="v7_main.do">메인</a><br />
+		</form:form>
 	</div>
 
 	<script type="text/javascript" src="resources/js/jquery-1.11.1.js"></script>
