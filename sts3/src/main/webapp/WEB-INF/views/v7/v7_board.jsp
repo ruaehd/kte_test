@@ -14,7 +14,24 @@
 		<c:forEach var="vo" items="${code}">
 			<a href="v7_board.do?code=${vo.brd_cd_no}">${vo.brd_cd_title}</a>
 		</c:forEach>
-		
+		<table class="table">
+			<tr>
+				<th>글번호</th>
+				<th>글제목</th>
+				<th>작성자</th>
+				<th>조회수</th>
+				<th>작성일</th>
+			</tr>
+			<c:forEach var="tmp" items="${list}">
+				<tr>
+					<td>${tmp.brd_no}</td>
+					<td>${tmp.brd_title}</td>
+					<td>${tmp.mem_id}</td>
+					<td>${tmp.brd_hit}</td>
+					<td>${tmp.brd_date}</td>
+				</tr>
+			</c:forEach>
+		</table>
 		<a href="v7_boardw.do?code=${param.code}" class="btn btn-success">글쓰기</a>
 	</div>
 

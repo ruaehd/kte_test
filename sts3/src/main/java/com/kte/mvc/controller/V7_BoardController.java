@@ -1,6 +1,7 @@
 package com.kte.mvc.controller;
 
 import java.util.List;
+import java.util.Map;
 
 import org.mybatis.spring.annotation.MapperScan;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -10,10 +11,13 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.multipart.MultipartFile;
+import org.springframework.web.multipart.MultipartHttpServletRequest;
 
 import com.kte.mvc.mapper1.V7_BoardDAO;
 import com.kte.mvc.vo.V7_Board;
 import com.kte.mvc.vo.V7_BoardCode;
+import com.kte.mvc.vo.V7_BoardImg;
 
 @Controller
 @MapperScan("com.kte.mvc.mapper1")
@@ -30,7 +34,9 @@ public class V7_BoardController {
 		}
 		
 		List<V7_BoardCode> code = bDAO.selectBoardCode();
+		List<V7_Board> list = bDAO.selectBoardList(no);
 		
+		model.addAttribute("list", list);
 		model.addAttribute("code", code);
 		return "v7/v7_board";
 	}
@@ -41,7 +47,7 @@ public class V7_BoardController {
 		int max_no = bDAO.selectBoardMaxNo();
 
 		vo.setBrd_no(max_no+1);
-		vo.setBrd_cd_no(no);
+		//vo.setBrd_cd_no(no);
 		vo.setMem_id("a1");
 		
 		model.addAttribute("vo", vo);
@@ -49,9 +55,35 @@ public class V7_BoardController {
 	}
 	
 	@RequestMapping(value="/v7_boardw.do", method=RequestMethod.POST)
-	public String boardWrite(@ModelAttribute("vo") V7_Board vo) {
+	public String boardWrite(@RequestParam("code") int code, @ModelAttribute("vo") V7_Board vo, MultipartHttpServletRequest request) {
 		
-		//bDAO.insertBoard(vo);
-		return "redirect:board.do";
+		try {
+			Map<String, MultipartFile> map = request.getFileMap();
+			V7_BoardImg imgVO = new V7_BoardImg();
+			imgVO.setBrd_no(vo.getBrd_no());
+			
+			for(int i=0; i<map.size(); i++) {
+				MultipartFile tfile = map.get("img"+(i+1));
+				if(tfile != null && !tfile.getOriginalFilename().equals("")) {
+					if(i==0) {
+						imgVO.setBrd_img_1(tfile.getBytes());
+					}
+					if(i==1) {
+						imgVO.setBrd_img_2(tfile.getBytes());
+					}
+					if(i==2) {
+						imgVO.setBrd_img_3(tfile.getBytes());
+					}
+				}
+			}
+			vo.setBrd_cd_no(code);
+			bDAO.insertBoard(vo, imgVO);
+			return "redirect:v7_board.do?code="+code;
+		}
+		catch(Exception e) {
+			System.out.println(e.getMessage());
+			return "redirect:v7_boardw.do?code="+code;
+		}
+		
 	}
 }
