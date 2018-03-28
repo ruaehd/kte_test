@@ -16,6 +16,7 @@
 		</c:forEach>
 		<table class="table">
 			<tr>
+				<th>이미지</th>
 				<th>글번호</th>
 				<th>글제목</th>
 				<th>작성자</th>
@@ -24,6 +25,7 @@
 			</tr>
 			<c:forEach var="tmp" items="${list}">
 				<tr>
+					<td><img src="selectImg.do?no=${tmp.brd_no}&idx=1" width="50px" height="50px"></td>
 					<td>${tmp.brd_no}</td>
 					<td>${tmp.brd_title}</td>
 					<td>${tmp.mem_id}</td>

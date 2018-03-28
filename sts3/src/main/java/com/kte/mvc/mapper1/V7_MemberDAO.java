@@ -26,4 +26,6 @@ public interface V7_MemberDAO {
 	@Options(useGeneratedKeys=false)
 	@Update("UPDATE V7_MEMBER SET mem_name=#{vo.mem_name}, mem_tel=#{vo.mem_tel}, mem_email=#{vo.mem_email} WHERE mem_id=#{vo.mem_id}")
 	public int updateMemberOne(@Param("vo") V7_Member vo);
+	
+	
 }

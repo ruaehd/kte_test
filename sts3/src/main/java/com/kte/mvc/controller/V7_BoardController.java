@@ -1,10 +1,18 @@
 package com.kte.mvc.controller;
 
+import java.io.InputStream;
 import java.util.List;
 import java.util.Map;
 
+import javax.servlet.http.HttpServletRequest;
+
+import org.apache.commons.io.IOUtils;
 import org.mybatis.spring.annotation.MapperScan;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpHeaders;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.MediaType;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.ModelAttribute;
@@ -84,6 +92,32 @@ public class V7_BoardController {
 			System.out.println(e.getMessage());
 			return "redirect:v7_boardw.do?code="+code;
 		}
+	}
+	
+	@RequestMapping(value="/selectImg.do", method=RequestMethod.GET)
+	public ResponseEntity<byte[]> selectImg(@RequestParam("no") int no, @RequestParam("idx") int idx, HttpServletRequest request){
 		
+		V7_BoardImg vo = bDAO.selectBoardImg(no);
+		byte[] imgData = null;
+		
+		if(idx==1) imgData = vo.getBrd_img_1();
+		if(idx==2) imgData = vo.getBrd_img_2();
+		if(idx==3) imgData = vo.getBrd_img_3();
+		
+		try {
+			final HttpHeaders headers = new HttpHeaders();
+			headers.setContentType(MediaType.IMAGE_JPEG);
+			
+			if(imgData == null ) {
+				InputStream in = request.getSession().getServletContext().getResourceAsStream("/resources/imgs/default.png");
+				imgData = IOUtils.toByteArray(in);
+			}
+			
+			return new ResponseEntity<byte[]>(imgData, headers, HttpStatus.OK);
+		}
+		catch(Exception e) {
+			System.out.println(e.getMessage());
+			return null;
+		}
 	}
 }
