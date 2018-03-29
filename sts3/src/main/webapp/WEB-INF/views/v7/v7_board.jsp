@@ -27,7 +27,7 @@
 				<tr>
 					<td><img src="selectImg.do?no=${tmp.brd_no}&idx=1" width="50px" height="50px"></td>
 					<td>${tmp.brd_no}</td>
-					<td>${tmp.brd_title}</td>
+					<td><a href="v7_boardc.do?no=${tmp.brd_no}&code=${param.code}">${tmp.brd_title}</a></td>
 					<td>${tmp.mem_id}</td>
 					<td>${tmp.brd_hit}</td>
 					<td>${tmp.brd_date}</td>

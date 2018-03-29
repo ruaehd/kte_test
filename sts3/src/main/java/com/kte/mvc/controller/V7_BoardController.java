@@ -120,4 +120,19 @@ public class V7_BoardController {
 			return null;
 		}
 	}
+	
+	@RequestMapping(value="/v7_boardc.do", method=RequestMethod.GET)
+	public String boardContent(Model model, @RequestParam(value="no", defaultValue="0") int no, @RequestParam(value="code", defaultValue="0") int cd) {
+		if(cd <= 0){
+			return "redirect:v7_board.do?code=1";
+		}
+		if(no <= 0) {
+			return "redirect:v7_board.do?code="+cd;
+		}
+		
+		V7_Board vo = bDAO.selectBoardOne(no);
+		model.addAttribute("vo", vo);
+		
+		return "v7/v7_boardc";
+	}
 }

@@ -38,4 +38,7 @@ public interface V7_BoardDAO {
 		})
 	@Select("SELECT * FROM V7_BOARD_IMG WHERE BRD_NO = #{no}")
 	public V7_BoardImg selectBoardImg(@Param("no") int no);
+	
+	@Select("SELECT * FROM V7_BOARD WHERE BRD_NO = #{no}")
+	public V7_Board selectBoardOne(@Param("no") int no);
 }
