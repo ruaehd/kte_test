@@ -30,6 +30,15 @@ public interface V7_BoardDAO {
 	
 	@Select("SELECT * FROM V7_BOARD WHERE BRD_CD_NO=#{brd_cd_no} ORDER BY BRD_NO DESC")
 	public List<V7_Board> selectBoardList(@Param("brd_cd_no") int no);
+	//mysql
+	//page=1 => SELECT * FROM v7_board WHERE brd_cd_no=1 OREDER BY BRD_NO DESC LIMIT 0, 10
+	//page=2 => SELECT * FROM v7_board WHERE brd_cd_no=1 OREDER BY BRD_NO DESC LIMIT 10, 10
+	
+	@Select("SELECT * FROM" + 
+			"      (SELECT brd_no, brd_title, brd_hit, mem_id, brd_date, ROW_NUMBER() OVER (ORDER BY brd_no DESC) rown" + 
+			"      FROM V7_BOARD WHERE brd_cd_no = #{code})" + 
+			"WHERE rown BETWEEN #{spage} and #{spage}+9")
+	public List<V7_Board> selectBoardList1(@Param("code") int no, @Param("spage") int page);
 	
 	@Results({
 		@Result(property="brd_img_1", column="brd_img_1", jdbcType=JdbcType.BLOB), 
@@ -41,4 +50,8 @@ public interface V7_BoardDAO {
 	
 	@Select("SELECT * FROM V7_BOARD WHERE BRD_NO = #{no}")
 	public V7_Board selectBoardOne(@Param("no") int no);
+	
+	@Select("SELECT COUNT(*) FROM V7_BOARD WHERE brd_cd_no=#{bcn}")
+	public int selectBoardTotPage(@Param("bcn") int no);
+	
 }

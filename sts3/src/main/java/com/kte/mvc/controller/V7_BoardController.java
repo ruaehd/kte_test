@@ -35,14 +35,19 @@ public class V7_BoardController {
 	private V7_BoardDAO bDAO = null;
 	
 	@RequestMapping(value="/v7_board.do", method=RequestMethod.GET)
-	public String boardList(Model model, @RequestParam(value="code", defaultValue="0") int no) {
+	public String boardList(Model model, @RequestParam(value="code", defaultValue="0") int no, @RequestParam(value="page", defaultValue="1") int page) {
 		
 		if(no == 0) {
 			return "redirect:v7_board.do?code=1";
 		}
 		
 		List<V7_BoardCode> code = bDAO.selectBoardCode();
-		List<V7_Board> list = bDAO.selectBoardList(no);
+		//List<V7_Board> list = bDAO.selectBoardList(no);
+		List<V7_Board> list = bDAO.selectBoardList1(no, (page-1)*10+1);
+		int totPage = bDAO.selectBoardTotPage(no);
+		
+		
+		model.addAttribute("totPage", (totPage-1)/10+1);
 		
 		model.addAttribute("list", list);
 		model.addAttribute("code", code);

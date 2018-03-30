@@ -34,16 +34,22 @@
 				</tr>
 			</c:forEach>
 		</table>
+		
+		<ul id="pagination" class="pagination"></ul>
+		
 		<a href="v7_boardw.do?code=${param.code}" class="btn btn-success">글쓰기</a>
 	</div>
 
 	<script type="text/javascript" src="resources/js/jquery-1.11.1.js"></script>
 	<script type="text/javascript" src="resources/js/bootstrap.min.js"></script>
-	<script type="text/javascript" src="resources/js/jquery.cookie.js"></script>
-	
+	<script type="text/javascript" src="resources/js/jquery.twbsPagination.min.js"></script>
 	<script>
 		$(function() {
-			
+			$('#pagination').twbsPagination({
+				totalPages:${totPage},
+				visiblePage:10,
+				href:'?code=${param.code}&page={{number}}'
+			})
 		});
 	</script>	
 </body>
