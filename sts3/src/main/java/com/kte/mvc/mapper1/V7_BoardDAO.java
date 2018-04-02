@@ -40,6 +40,17 @@ public interface V7_BoardDAO {
 			"WHERE rown BETWEEN #{spage} and #{spage}+9")
 	public List<V7_Board> selectBoardList1(@Param("code") int no, @Param("spage") int page);
 	
+	@Select("SELECT * FROM" + 
+			"		(SELECT brd_no, brd_title, brd_hit, mem_id, brd_date, ROW_NUMBER() OVER (ORDER BY brd_no DESC) rown" + 
+			"		FROM V7_BOARD WHERE brd_cd_no = #{code} " +
+			"		AND ${type} LIKE '%' || #{text} || '%' ) "+
+			"WHERE rown BETWEEN #{spage} and #{spage}+9")
+	public List<V7_Board> selectBoardList2(@Param("code") int no, @Param("spage") int page, @Param("type") String ty, @Param("text") String tx);
+	
+	//SELECT * FROM 테이블명 WHERE brd_title LIKE '%한글%'
+	// MYSQL : WHERE brd_title LIKE CONCAT('%', #{text}, '%')
+	//ORACLE : WHERE brd_title LIKE '%' || #{text} || '%'
+	
 	@Results({
 		@Result(property="brd_img_1", column="brd_img_1", jdbcType=JdbcType.BLOB), 
 		@Result(property="brd_img_2", column="brd_img_2", jdbcType=JdbcType.BLOB), 
@@ -53,5 +64,8 @@ public interface V7_BoardDAO {
 	
 	@Select("SELECT COUNT(*) FROM V7_BOARD WHERE brd_cd_no=#{bcn}")
 	public int selectBoardTotPage(@Param("bcn") int no);
+	
+	@Select("SELECT COUNT(*) FROM V7_BOARD WHERE brd_cd_no=#{bcn} AND ${type} LIKE '%' || #{text} || '%' ")
+	public int selectBoardTotPage2(@Param("bcn") int no, @Param("type") String ty, @Param("text") String tx);
 	
 }
