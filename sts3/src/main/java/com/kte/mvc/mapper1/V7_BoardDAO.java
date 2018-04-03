@@ -2,15 +2,18 @@ package com.kte.mvc.mapper1;
 
 import java.util.List;
 
+import org.apache.ibatis.annotations.Insert;
 import org.apache.ibatis.annotations.Param;
 import org.apache.ibatis.annotations.Result;
 import org.apache.ibatis.annotations.Results;
 import org.apache.ibatis.annotations.Select;
+import org.apache.ibatis.annotations.SelectKey;
 import org.apache.ibatis.type.JdbcType;
 
 import com.kte.mvc.vo.V7_Board;
 import com.kte.mvc.vo.V7_BoardCode;
 import com.kte.mvc.vo.V7_BoardImg;
+import com.kte.mvc.vo.V7_Reply;
 
 public interface V7_BoardDAO {
 	
@@ -68,4 +71,7 @@ public interface V7_BoardDAO {
 	@Select("SELECT COUNT(*) FROM V7_BOARD WHERE brd_cd_no=#{bcn} AND ${type} LIKE '%' || #{text} || '%' ")
 	public int selectBoardTotPage2(@Param("bcn") int no, @Param("type") String ty, @Param("text") String tx);
 	
+	@Insert("INSERT INTO V7_REPLY(REP_NO, REP_CONTENT, REP_DATE, BRD_NO VALUES(#{maxNo}+1, #{vo.rep_content}, SYSDATE, #{vo.brd_no})")
+	@SelectKey(statement = "SELECT NVL(MAX(rep_no),0) maxNo FROM V7_REPLY", keyProperty="maxNo", resultType=Integer.class, before=true)
+	public int insertBoardReply(@Param("vo") V7_Reply vo);
 }

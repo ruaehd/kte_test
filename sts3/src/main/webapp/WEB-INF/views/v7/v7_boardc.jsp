@@ -24,6 +24,12 @@
 		이미지2 : <img src="selectImg.do?no=${vo.brd_no}&idx=2" width="50px" height="50px"><br />
 		이미지3 : <img src="selectImg.do?no=${vo.brd_no}&idx=3" width="50px" height="50px"><br />
 		
+		
+		<form action="v7_boardreply.do?brd_no=${vo.brd_no}&code=${param.code}" method="post">
+			<textarea name="content" class="form-control"></textarea>
+			<input type="submit" value="작성" />
+		</form>
+		
 		<a href="v7_board.do?code=${param.code}" class="btn btn-primary btn-sm">글목록</a>
 		<a href="" class="btn btn-primary btn-sm">이전글</a>
 		<a href="" class="btn btn-primary btn-sm">다음글</a>

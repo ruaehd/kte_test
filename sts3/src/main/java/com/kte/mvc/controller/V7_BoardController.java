@@ -26,6 +26,7 @@ import com.kte.mvc.mapper1.V7_BoardDAO;
 import com.kte.mvc.vo.V7_Board;
 import com.kte.mvc.vo.V7_BoardCode;
 import com.kte.mvc.vo.V7_BoardImg;
+import com.kte.mvc.vo.V7_Reply;
 
 @Controller
 @MapperScan("com.kte.mvc.mapper1")
@@ -34,7 +35,7 @@ public class V7_BoardController {
 	@Autowired
 	private V7_BoardDAO bDAO = null;
 	
-	/*@RequestMapping(value="/v7_board.do", method=RequestMethod.GET)
+	@RequestMapping(value="/v7_board.do", method=RequestMethod.GET)
 	public String boardList(Model model, 
 			@RequestParam(value="code", defaultValue="0") int no, 
 			@RequestParam(value="page", defaultValue="1") int page, 
@@ -59,32 +60,8 @@ public class V7_BoardController {
 		model.addAttribute("list", list);
 		model.addAttribute("code", code);
 		return "v7/v7_board";
-	}*/
-	
-	@RequestMapping(value="/v7_board.do", method=RequestMethod.GET)
-	public String boardList(Model model, 
-			@RequestParam(value="code", defaultValue="0") int no, 
-			@RequestParam(value="page", defaultValue="1") int page, 
-			@RequestParam(value="type", defaultValue="brd_title") String type,
-			@RequestParam(value="text", defaultValue="") String text) {
-		
-		if(no == 0) {
-			return "redirect:v7_board.do?code=1";
-		}
-		
-		List<V7_BoardCode> code = bDAO.selectBoardCode();
-		
-		int totPage = bDAO.selectBoardTotPage2(no, type, text);
-		
-		List<V7_Board> list = bDAO.selectBoardList2(no, (page-1)*10+1, type, text);
-		
-		model.addAttribute("totPage", (totPage-1)/10+1);
-		
-		model.addAttribute("list", list);
-		model.addAttribute("code", code);
-		return "v7/v7_board";
 	}
-	
+		
 	@RequestMapping(value="/v7_boardw.do", method=RequestMethod.GET)
 	public String boardWrite(Model model, @RequestParam(value="code", defaultValue="1") int no) {
 		V7_Board vo = new V7_Board();
@@ -99,6 +76,11 @@ public class V7_BoardController {
 	}
 	
 	@RequestMapping(value="/v7_boardw.do", method=RequestMethod.POST)
+	public String boardWrite(@RequestParam("code") int code, @ModelAttribute("vo") V7_Board vo) {
+		return "redirect:v7_boardw.do";
+	}
+	
+	/*@RequestMapping(value="/v7_boardw.do", method=RequestMethod.POST)
 	public String boardWrite(@RequestParam("code") int code, @ModelAttribute("vo") V7_Board vo, MultipartHttpServletRequest request) {
 		
 		try {
@@ -128,7 +110,7 @@ public class V7_BoardController {
 			System.out.println(e.getMessage());
 			return "redirect:v7_boardw.do?code="+code;
 		}
-	}
+	}*/
 	
 	@RequestMapping(value="/selectImg.do", method=RequestMethod.GET)
 	public ResponseEntity<byte[]> selectImg(@RequestParam("no") int no, @RequestParam("idx") int idx, HttpServletRequest request){
@@ -170,5 +152,16 @@ public class V7_BoardController {
 		model.addAttribute("vo", vo);
 		
 		return "v7/v7_boardc";
+	}
+	
+	@RequestMapping(value="/v7_boardreply.do", method=RequestMethod.POST)
+	public String boardReply(@RequestParam("brd_no") int no, @RequestParam("content") String content, @RequestParam("code") int code) {
+		V7_Reply vo = new V7_Reply();
+		vo.setBrd_no(no);
+		vo.setRep_content(content);
+		
+		bDAO.insertBoardReply(vo);
+		
+		return "redirect:v7_boardc.do?brd_no="+no+"&code="+code;
 	}
 }
