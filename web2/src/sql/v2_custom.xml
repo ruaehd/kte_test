@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="V2_Custom">
+	<insert id="insertCustom" parameterType="vo.V2_CustomVO">
+		INSERT INTO `v2_custom` VALUES(#{id}, SHA1(#{pw}), #{name}, #{tel}, NOW())
+	</insert>
+	
+	<select id="selectIDCheck" parameterType="vo.V2_CustomVO" resultType="int">
+		SELECT count(*) AS cnt FROM `v2_custom` WHERE id=#{id}
+	</select>
+	
+	<select id="selectLogin" parameterType="vo.V2_CustomVO" resultType="vo.V2_CustomVO">
+		SELECT * FROM `v2_custom` WHERE id=#{id} AND pw=SHA1(#{pw})
+	</select>
+	
+	<select id="selectUserLogin" parameterType="vo.V2_CustomVO" resultType="vo.V2_CustomVO">
+		SELECT * FROM `v2_custom` WHERE id=#{id} AND pw=SHA1(#{pw}) AND grade=1
+	</select>
+	
+	<select id="selectAdminLogin" parameterType="vo.V2_CustomVO" resultType="vo.V2_CustomVO">
+		SELECT * FROM `v2_custom` WHERE id=#{id} AND pw=SHA1(#{pw}) AND grade=999
+	</select>
+</mapper>

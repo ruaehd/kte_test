@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="V3_Member">
+	<insert id="insertMember" parameterType="v3_MemberVO">
+		INSERT INTO `v3_member`(no, name, pw, birth, tel, phone, postcode, addr, date1) 
+		VALUES(#{no}, #{name}, SHA1(#{pw}), #{birth}, #{tel}, #{phone}, #{postcode}, #{addr}, NOW())
+	</insert>
+	
+	<select id="selectMemberList" resultType="v3_MemberVO">
+		SELECT * FROM `v3_member` ORDER BY no DESC
+	</select>
+	
+	<select id="selectMemberList1" resultType="v3_MemberVO">
+		SELECT * FROM `v3_member` ORDER BY no DESC WHERE chk=1
+	</select>
+	
+	<select id="selectLastNo" resultType="int">
+		SELECT ifnull(MAX(no), 0) FROM `v3_member`
+	</select>
+	
+	<select id="selectMemberNoList" resultType="String">
+		SELECT no FROM `v3_member`
+	</select>
+	
+	<select id="selectLogin" parameterType="v3_MemberVO" resultType="v3_MemberVO">
+		SELECT * FROM `v3_member` WHERE no=#{no} AND pw=SHA1(#{pw})
+	</select>
+	
+	<select id="selectMemberOne" resultType="v3_MemberVO">
+		SELECT * FORM `v3_member` WHERE no=#{no}
+	</select>
+	<update id="updateMember" parameterType="v3_MemberVO">
+		UPDATE `v3_member` SET name=#{name}, pw=#{pw}, birth=#{birth}, 
+		tel=#{tel}, phone=#{phone}, postcode=#{postcode}, addr=#{addr}
+	</update>
+	
+	<delete id="deleteMember" parameterType="v3_MemberVO">
+		DELETE  FROM `v3_member` WHERE no=#{no}
+	</delete>
+	
+	<update id="updateMemberChk" parameterType="v3_MemberVO">
+		UPDATE `v3_member` SET chk=#{chk} WHERE no=#{no}
+	</update>
+</mapper>

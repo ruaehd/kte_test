@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="V2_Cart">
+	<insert id="insertCart" parameterType="vo.V2_CartVO">
+		INSERT INTO v2_cart(no, cnt, user_id, item_no, date1)
+		VALUES (#{no}, #{cnt}, #{user_id}, #{item_no}, NOW())
+	</insert>
+	
+	<select id="selectCartList" parameterType="vo.V2_CartVO" resultType="vo.V2_ItemCartVO">
+		SELECT ti.name, ti.price, ta.no, ta.cnt, ta.date1 
+		FROM v2_item ti
+		INNER JOIN
+			(SELECT no, SUM(cnt) AS cnt, user_id, item_no, date1 
+			FROM v2_cart WHERE user_id=#{user_id} 
+			GROUP BY item_no) ta 
+		ON ti.no = ta.item_no
+	</select>
+	
+	<!-- <update id="" parameterType="">
+		UPDATE v2_cart SET user_id=str1 WHERE user_id=str0;
+	</update> -->
+</mapper>

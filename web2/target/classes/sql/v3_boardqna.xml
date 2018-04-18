@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="V3_Boardqna">
+	
+	<resultMap type="vo.V3_BoardqnaVO" id="resultBoardqna">
+		<result column="no" property="no" jdbcType="BIGINT" javaType="java.math.BigInteger"/>
+	</resultMap>
+	
+	<select id="selectBoardqnalist" parameterType="vo.V3_SearchVO" resultMap="resultBoardqna">
+		SELECT * FROM `v3_boardqna` 
+		WHERE title LIKE CONCAT('%',#{txt},'%') 
+			OR content LIKE CONCAT('%',#{txt},'%')
+			OR writer LIKE CONCAT('%',#{txt},'%')
+		ORDER BY date1 DESC LIMIT #{page}, 10
+	</select>
+	
+	<insert id="insertBoardqna" parameterType="vo.V3_BoardqnaVO">
+		INSERT INTO `v3_boardqna` (no, title, content, writer, password, hit, date1) VALUES(#{no, jdbcType=BIGINT}, #{title}, #{content}, #{writer}, SHA1(#{password}), #{hit}, NOW())
+	</insert>
+	
+	<select id="selectBoardqnaLastNo" resultMap="resultBoardqna">
+		SELECT ifnull(MAX(no), 0) AS no FROM `v3_boardqna`
+	</select>
+	
+	<select id="selectBoardqnaOne" resultMap="resultBoardqna">
+		SELECT * FROM `v3_boardqna` WHERE no=#{no}
+	</select>
+	
+	<select id="selectBoardqnaTot" parameterType="vo.V3_SearchVO" resultType="long">
+		SELECT count(*) AS cnt FROM `v3_boardqna` 
+		WHERE title LIKE CONCAT('%',#{txt},'%') 
+			OR content LIKE CONCAT('%',#{txt},'%')
+			OR writer LIKE CONCAT('%',#{txt},'%')
+	</select>
+	
+	<update id="updateBoardqnaHit" parameterType="vo.V3_BoardqnaVO" >
+		UPDATE `v3_boardqna` SET hit=hit+1 WHERE no=#{no}
+	</update>
+	
+	<select id="selectBoardqnaPrev" parameterType="vo.V3_BoardqnaVO" resultMap="resultBoardqna">
+		SELECT ifnull(MAX(no), 0) AS no FROM `v3_boardqna` WHERE no <![CDATA[<]]> #{no}
+	</select>
+	
+	<select id="selectBoardqnaNext" parameterType="vo.V3_BoardqnaVO" resultMap="resultBoardqna">
+		SELECT ifnull(MIN(no), 0) AS no FROM `v3_boardqna` WHERE no <![CDATA[>]]> #{no}
+	</select>
+	
+	<select id="selectHitTop" resultMap="resultBoardqna">
+		SELECT title FROM `v3_boardqna` ORDER BY hit DESC LIMIT 10 
+	</select>
+</mapper>

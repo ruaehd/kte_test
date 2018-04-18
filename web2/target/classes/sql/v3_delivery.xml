@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="V3_Delivery">
+	<select id="selectLastNo" resultType="int">
+		SELECT ifnull(MAX(no), 0) FROM `v3_delivery`
+	</select>
+	
+	<insert id="insertDelivery" parameterType="vo.V3_DeliveryVO">
+		INSERT INTO `v3_delivery` (no, code_pv, code_pd, d_date, cnt, cost, price, date1) VALUES(#{no}, #{code_pv}, #{code_pd}, #{d_date}, #{cnt}, #{cost}, #{price}, NOW())
+	</insert>
+	
+	<select id="selectDeliveryList" resultType="vo.V3_DeliveryVO">
+		SELECT * FROM `v3_delivery` ORDER BY no DESC
+	</select>
+	
+	<select id="selectDeliveryOne" parameterType="String" resultType="vo.V3_DeliveryVO">
+		SELECT * FROM `v3_delivery` WHERE no=#{no}
+	</select>
+	
+	<update id="updateDelivery" parameterType="vo.V3_DeliveryVO">
+		UPDATE `v3_delivery` SET code_pv=#{code_pv}, code_pd=#{code_pd}, d_date=#{d_date}, cnt=#{cnt}, cost=#{cost}, price=#{price} WHERE no=#{no}  
+	</update>
+</mapper>

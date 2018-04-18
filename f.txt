@@ -1,0 +1,3 @@
+SELECT * FROM Ta
+INNER JOIN Tb
+ON Ta.id = Tb.id;

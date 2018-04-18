@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="Exam">
+	<insert id="insertMember" parameterType="examvo.MemberVO">
+		INSERT INTO `usertbl` VALUES(#{userID}, #{name}, #{birthYear}, #{addr}, #{mobile1}, #{mobile2}, #{height}, NOW())
+	</insert>
+	
+	<select id="selectMemberList" resultType="examvo.MemberVO">
+		SELECT * FROM `usertbl`
+	</select>
+	
+	<select id="selectMemberOne" parameterType="examvo.MemberVO" resultType="examvo.MemberVO">
+		Select * From `usertbl` WHERE userID=#{userID}
+	</select>
+	
+	<update id="updateMember" parameterType="examvo.MemberVO">
+		UPDATE `usertbl` SET name=#{name}, birthYear=#{birthYear}, addr=#{addr}, mobile1=#{mobile1}, mobile2=#{mobile2}, height=#{height} WHERE userID=#{userID}
+	</update>
+	
+	<delete id="memberDelete" parameterType="examvo.MemberVO">
+		DELETE FROM usertbl WHERE userID=#{userID}
+	</delete>
+</mapper>

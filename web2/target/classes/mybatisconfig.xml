@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE configuration PUBLIC "-//mybatis.org//DTD Config 3.0//EN"  "http://mybatis.org/dtd/mybatis-3-config.dtd">
+<configuration>
+
+	<typeAliases>
+		<typeAlias alias="V2_ItemVO" type="vo.V2_ItemVO" />
+	</typeAliases>
+
+	<environments default="development">
+		<environment id="development">
+			<transactionManager type="JDBC" />
+			<dataSource type="POOLED">
+				<property name="driver" value="org.mariadb.jdbc.Driver" />
+				<property name="url" value="jdbc:mysql://127.0.0.1:3306/kte901" />
+				<property name="username" value="kte901" />
+				<property name="password" value="class901" />
+
+
+			</dataSource>
+		</environment>
+	</environments>
+
+	<mappers>
+		<mapper resource="sql/member1.xml" />
+		<mapper resource="sql/board1.xml" />
+		<mapper resource="sql/v2_custom.xml" />
+		<mapper resource="sql/v2_item.xml" />
+		<mapper resource="sql/v2_order.xml" />
+		<mapper resource="sql/v2_cart.xml" />
+		<mapper resource="sql/exam.xml" />
+		<mapper resource="sql/v3_provider.xml" />
+		<mapper resource="sql/v3_product.xml" />
+		<mapper resource="sql/v3_delivery.xml" />
+		<mapper resource="sql/v3_member.xml" />
+		<mapper resource="sql/v3_sale.xml" />
+		<mapper resource="sql/v3_boardqna.xml" />
+	</mappers>
+</configuration>
