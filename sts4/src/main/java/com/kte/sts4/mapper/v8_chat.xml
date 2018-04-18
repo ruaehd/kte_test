@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="V8_Chat">
+	<insert id="insertMember" parameterType="com.kte.sts4.vo.Member">
+		INSERT INTO V8_CHAT VALUES(#{id}, SYSDATE)
+	</insert>	
+	
+	<delete id="deleteMember" parameterType="com.kte.sts4.vo.Member">
+		DELETE FROM V8_CHAT WHERE id=#{id}
+	</delete>
+	
+	<select id="selectMemberList" resultType="com.kte.sts4.vo.Member">
+		SELECT * FROM V8_CHAT
+	</select>
+	
+</mapper>
