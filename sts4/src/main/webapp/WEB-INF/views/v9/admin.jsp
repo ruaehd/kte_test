@@ -43,7 +43,9 @@
 							</tr>
 						</c:forEach>
 				</table>
-				
+				<div align="center">
+					<ul id="pagination" class="pagination"></ul>
+				</div>
 			</c:if>
 		</div>
 	</div>
@@ -93,8 +95,17 @@
 	</c:if>
 	<script type="text/javascript" src="https://code.jquery.com/jquery-1.12.4.min.js"></script>
 	<script type="text/javascript" src="resources/js/bootstrap.min.js"></script>
+	<script type="https://cdnjs.loli.net/ajax/libs/twbs-pagination/1.3.1/jquery.twbsPagination.min.js"></script>
+	
 	<script>
 		$(function() {
+			
+			$('#pagination').twbsPagination({
+				totalPages:15,
+				visiblePages:10,
+				href:'?menu=${param.menu}&page={{number}}'
+			});
+			
 			$('#btn_insert').click(function(){
 				$('#insertmodal').modal('show');
 			})
