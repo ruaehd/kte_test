@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="V9_Board">
+	<insert id="insertBoard" useGeneratedKeys="true" keyProperty="no" parameterType="com.kte.sts4.vo.V9_Board">
+		INSERT INTO `v9_board`(title, content, writer, date) VALUES(#{title}, #{content}, #{writer}, NOW())
+	</insert>	
+	
+	<select id="selectBoardList" resultType="com.kte.sts4.vo.V9_Board">
+		SELECT * FROM `v9_board` ORDER BY no DESC
+	</select>
+	
+	<select id="selectBoardOne" resultType="com.kte.sts4.vo.V9_Board" parameterType="int">
+		SELECT * FROM `v9_board` WHERE no=#{no}
+	</select>
+	
+	<select id="selectBoardNext" parameterType="java.util.Map" resultType="int">
+		SELECT ifnull(Min(no),0) FROM `v9_board` WHERE no <![CDATA[ > ]]> #{no}
+	</select>
+	
+	<select id="selectBoardPrev" parameterType="java.util.Map" resultType="int">
+		SELECT ifnull(Max(no),0) FROM `v9_board` WHERE no <![CDATA[ < ]]> #{no}
+	</select>
+</mapper>
