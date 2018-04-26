@@ -32,14 +32,14 @@ public interface V9_SellerDAO {
 	
 	//판매자 목록 - 조건없음
 	@Select({"SELECT s.cr_number, s.name, s.tel, s.addr, ",
-		"s.date, bc.name br_name, bc.code ",
+		"s.date, bc.name bc_name, bc.code ",
 		"FROM v9_seller s, v9_business_conditions bc ",
 		"WHERE s.code = bc.code LIMIT #{page}, 10"})
 	public List<V9_Seller> selectSeller1(@Param("page")int page);
 	
 	//판매자 목록 - 조건있음
 	@Select({"SELECT s.cr_number, s.name, s.tel, s.addr, ",
-		"s.date, bc.name br_name, bc.code ",
+		"s.date, bc.name bc_name, bc.code ",
 		"FROM v9_seller s, v9_business_conditions bc ",
 		"WHERE s.code = bc.code AND bc.code=#{sel_bc} LIMIT #{page}, 10"})
 	public List<V9_Seller> selectSeller(@Param("page")int page, 

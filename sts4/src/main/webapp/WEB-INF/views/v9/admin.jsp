@@ -49,7 +49,7 @@
 						<td>${vo.tel}</td>
 						<td>${vo.addr}</td>
 						<td>${vo.date}</td>
-						<td>${vo.br_name}</td>
+						<td>${vo.bc_name}</td>
 						<td>
 							<a href="#" class="btn btn-xs btn-info">수정</a>
 							<a href="#" class="btn btn-xs btn-danger">삭제</a>
@@ -219,7 +219,7 @@
 					arr1.push("${vo.tel}");
 					arr1.push("${vo.addr}");
 					arr1.push("${vo.date}");
-					arr1.push("${vo.br_name}");
+					arr1.push("${vo.bc_name}");
 					arr1.push("${vo.code}");
 					arr.push(arr1);
 				</c:forEach>
