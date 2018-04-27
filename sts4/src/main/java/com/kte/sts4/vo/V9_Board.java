@@ -3,6 +3,7 @@ package com.kte.sts4.vo;
 public class V9_Board {
 	private int no = 0, hit=0;
 	private String title=null, content=null, writer=null, date=null;
+	
 	public int getNo() {
 		return no;
 	}

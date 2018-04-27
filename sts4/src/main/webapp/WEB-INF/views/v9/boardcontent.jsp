@@ -35,13 +35,17 @@
 				<td>${vo.writer}</td>
 			</tr>
 			<tr>
+				<th>조회수</th>
+				<td>${vo.hit}</td>
+			</tr>
+			<tr>
 				<th>작성일</th>
 				<td>${vo.date}</td>
 			</tr>
 		</table>
-		<c:if test="${prev !=0}">
+		
 			<a href="v9_boardcontent.do?no=${prev}" class="btn btn-success">이전글</a>
-		</c:if>
+		
 		<c:if test="${next !=0 }">
 			<a href="v9_boardcontent.do?no=${next}" class="btn btn-success">다음글</a>
 		</c:if>
