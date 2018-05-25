@@ -10,7 +10,7 @@
 		SELECT * FROM `v9_board` ORDER BY no DESC
 	</select>
 	
-	<select id="selectBoardOne" resultType="com.kte.sts4.vo.V9_Board" parameterType="nit">
+	<select id="selectBoardOne" resultType="com.kte.sts4.vo.V9_Board" parameterType="int">
 		SELECT * FROM `v9_board` WHERE no=#{no}
 	</select>
 	
