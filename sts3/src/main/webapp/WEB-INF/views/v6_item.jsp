@@ -63,7 +63,6 @@
 					};
 				}, 'json');
 			}
-			
 
 			
 			$('#item2').change(function(){

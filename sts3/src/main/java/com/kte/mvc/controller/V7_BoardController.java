@@ -66,7 +66,7 @@ public class V7_BoardController {
 	public String boardWrite(Model model, @RequestParam(value="code", defaultValue="1") int no) {
 		V7_Board vo = new V7_Board();
 		int max_no = bDAO.selectBoardMaxNo();
-
+		
 		vo.setBrd_no(max_no+1);
 		//vo.setBrd_cd_no(no);
 		vo.setMem_id("a1");
